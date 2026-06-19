@@ -21,10 +21,18 @@ matched by eye and the hero's curved wave is a CSS approximation.
   `<meta name="robots" content="noindex, nofollow">` near the top to keep the
   staging draft out of search engines. DELETE it before going live or the real
   site won't be indexed by Google.
-- **Assets** — every image currently loads from the GoHighLevel media CDN
-  (`assets.cdn.filesafe.space`). Search the code for `CDN-ASSET`. Once Figma Dev
-  access lands, export the real assets into an `/assets` folder and replace the
-  URLs so the site no longer depends on the GHL account.
+- **Assets** — self-hosted so far (exported from Figma, in `/assets`): the **hero
+  photo** (`hero.webp`) and the **logo** (`logo.png`, used in nav + favicon).
+  The rest still load from the GoHighLevel media CDN (`assets.cdn.filesafe.space`)
+  — search the code for `CDN-ASSET`. Still needed, via a *targeted* Dev Mode export
+  (select the single group/frame layer, then Export — the bulk "export all"
+  produces hundreds of unmappable fragments, and selecting a leaf "Vector" path
+  gives you a useless sliver): the **footer logo** (needs the *white* variant for
+  the navy footer), the **4 solution-card icons**, the **sparkle**, the **hero
+  background graphic**, and the **phone mockup**. Drop each into `/assets` and swap
+  its `CDN-ASSET` URL. (Export vectors as SVG; ratio is irrelevant for SVG.)
+  Lifestyle photos `Frame 37/38` from the export are available for the Diaries/
+  Reels thumbnails if wanted.
 - **Waitlist form** — set `FORM_ENDPOINT` in the `<script>` at the bottom of
   `index.html` to the GoHighLevel inbound-webhook URL (ask Lisa). Left blank, the
   form runs in demo mode (shows the success state without sending). Do NOT commit

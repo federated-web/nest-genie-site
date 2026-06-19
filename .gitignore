@@ -8,6 +8,12 @@ Thumbs.db
 # Dependencies (if any tooling is added later)
 node_modules/
 
+# Raw Figma export dump (keep source assets out of the repo;
+# processed/optimized assets live in /assets instead)
+exports/
+assets/hero.png
+
+
 # Local env / secrets — never commit the live form webhook URL
 .env
 .env.*
