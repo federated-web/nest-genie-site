@@ -12,6 +12,7 @@ node_modules/
 # processed/optimized assets live in /assets instead)
 exports/
 assets/hero.png
+assets/_preview_footer_logo.png
 
 
 # Local env / secrets — never commit the live form webhook URL

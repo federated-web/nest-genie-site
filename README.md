@@ -21,16 +21,16 @@ matched by eye and the hero's curved wave is a CSS approximation.
   `<meta name="robots" content="noindex, nofollow">` near the top to keep the
   staging draft out of search engines. DELETE it before going live or the real
   site won't be indexed by Google.
-- **Assets** — self-hosted so far (exported from Figma, in `/assets`): the **hero
-  photo** (`hero.webp`) and the **logo** (`logo.png`, used in nav + favicon).
+- **Assets** — self-hosted so far (in `/assets`): the **hero photo** (`hero.webp`),
+  the **logo** (`logo.png`, nav), the **favicon** (`favicon.png`, square nest icon),
+  and the **footer logo** (`logo-white.png`, white lockup for the navy footer).
   The rest still load from the GoHighLevel media CDN (`assets.cdn.filesafe.space`)
   — search the code for `CDN-ASSET`. Still needed, via a *targeted* Dev Mode export
   (select the single group/frame layer, then Export — the bulk "export all"
   produces hundreds of unmappable fragments, and selecting a leaf "Vector" path
-  gives you a useless sliver): the **footer logo** (needs the *white* variant for
-  the navy footer), the **4 solution-card icons**, the **sparkle**, the **hero
-  background graphic**, and the **phone mockup**. Drop each into `/assets` and swap
-  its `CDN-ASSET` URL. (Export vectors as SVG; ratio is irrelevant for SVG.)
+  gives a useless sliver): the **4 solution-card icons**, the **sparkle**, the
+  **hero background graphic**, and the **phone mockup**. Drop each into `/assets`
+  and swap its `CDN-ASSET` URL. (Export vectors as SVG; ratio is irrelevant for SVG.)
   Lifestyle photos `Frame 37/38` from the export are available for the Diaries/
   Reels thumbnails if wanted.
 - **Waitlist form** — set `FORM_ENDPOINT` in the `<script>` at the bottom of
