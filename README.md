@@ -17,6 +17,10 @@ matched by eye and the hero's curved wave is a CSS approximation.
 
 ## TODO before launch
 
+- **⚠️ Remove the `noindex` tag** — `index.html` has a
+  `<meta name="robots" content="noindex, nofollow">` near the top to keep the
+  staging draft out of search engines. DELETE it before going live or the real
+  site won't be indexed by Google.
 - **Assets** — every image currently loads from the GoHighLevel media CDN
   (`assets.cdn.filesafe.space`). Search the code for `CDN-ASSET`. Once Figma Dev
   access lands, export the real assets into an `/assets` folder and replace the
