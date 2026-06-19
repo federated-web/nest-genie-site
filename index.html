@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ─── SEO / SOCIAL META ──────────────────────────────────────────
+       TODO: confirm canonical domain + add a real OG share image
+       (1200x630) once Dev access lands and assets are exported. -->
+  <title>NestGenie — Your Always-On AI Parenting Partner</title>
+  <meta name="description" content="NestGenie is your family's Chief of Staff and Personal Assistant — practical, evidence-based parenting help through text and voice. Join the waitlist." />
+  <link rel="canonical" href="https://www.nestgenie.com/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="NestGenie — Your Always-On AI Parenting Partner" />
+  <meta property="og:description" content="A Chief of Staff who thinks ahead and a Personal Assistant who gets things done — for your family, through text and voice." />
+  <meta property="og:url" content="https://www.nestgenie.com/" />
+  <!-- TODO: replace with a hosted 1200x630 share image -->
+  <meta property="og:image" content="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a317a8c6dd61c546ad1d249.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="NestGenie — Your Always-On AI Parenting Partner" />
+  <meta name="twitter:description" content="A Chief of Staff who thinks ahead and a Personal Assistant who gets things done — for your family." />
+
+  <!-- Favicon — TODO: replace with exported NestGenie favicon set -->
+  <link rel="icon" href="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a317a8c6dd61c546ad1d249.svg" type="image/svg+xml" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- ════════════════════════════════════════════════════════════════
+       ASSET NOTE FOR THE TEAM
+       Every image below currently loads from the GoHighLevel media CDN
+       (assets.cdn.filesafe.space, location qMwpZRG6MenJEivJjfZb).
+       Once Figma Dev access lands, export the real assets, drop them in
+       an /assets folder, and replace these URLs so the site no longer
+       depends on the GHL account. Search "CDN-ASSET" to find them all.
+       ════════════════════════════════════════════════════════════════ -->
+
+  <style>
+    /* ─── RESET & ROOT ────────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary:   #010066;  /* brand navy */
+      --primary-2: #020088;  /* hover navy */
+      --secondary: #A2D6FF;  /* brand light blue */
+      --secondary-2: #8fcfff;
+      --light:     #FAFAFA;
+      --gray:      #696969;
+      --dark-gray: #262626;
+
+      --maxw: 1100px;
+      --radius: 18px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Fredoka', system-ui, sans-serif;
+      font-weight: 400;
+      color: var(--dark-gray);
+      background: var(--light);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; }
+
+    /* visually-hidden but screen-reader accessible */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    /* ─── TYPOGRAPHY HELPERS ─────────────────────────────────── */
+    .label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: var(--gray);
+      margin-bottom: 10px;
+      display: block;
+    }
+    .label--light { color: var(--secondary); }
+
+    h1 {
+      font-size: clamp(38px, 5vw, 60px);
+      font-weight: 600;
+      line-height: 1.08;
+      color: var(--primary);
+    }
+
+    h2 {
+      font-size: clamp(30px, 3.5vw, 46px);
+      font-weight: 600;
+      line-height: 1.12;
+      color: var(--primary);
+    }
+
+    h2.light { color: #fff; }
+
+    .section-sub {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--gray);
+      line-height: 1.65;
+      margin-top: 14px;
+    }
+    /* contrast fix: was rgba(255,255,255,.68) — bumped for WCAG AA on navy */
+    .section-sub.light { color: rgba(255,255,255,.82); }
+
+    /* ─── BUTTONS ─────────────────────────────────────────────── */
+    .btn {
+      display: inline-block;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: transform .18s, box-shadow .18s, background .18s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:focus-visible { outline: 3px solid var(--secondary); outline-offset: 3px; }
+
+    .btn--primary { background: var(--primary); color: #fff; }
+    .btn--primary:hover { background: var(--primary-2); box-shadow: 0 6px 20px rgba(1,0,102,.28); }
+
+    .btn--secondary { background: var(--secondary); color: var(--primary); }
+    .btn--secondary:hover { background: var(--secondary-2); box-shadow: 0 6px 20px rgba(162,214,255,.5); }
+
+    /* ─── NAV ─────────────────────────────────────────────────── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: #fff;
+      border-bottom: 1px solid rgba(1,0,102,.08);
+      padding: 0 60px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .nav-logo { display: flex; align-items: center; gap: 9px; text-decoration: none; flex-shrink: 0; }
+
+    .nav-links { display: flex; gap: 30px; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--dark-gray);
+      font-size: 15px;
+      transition: color .15s;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    /* The waitlist link is redundant on desktop (the CTA button covers it);
+       only surface it inside the mobile dropdown menu */
+    .nav-link--cta { display: none; }
+
+    .nav-cta { flex-shrink: 0; }
+
+    /* Hamburger (mobile only) */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      flex-shrink: 0;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--primary);
+      margin: 5px 0;
+      transition: transform .2s, opacity .2s;
+    }
+
+    /* ─── HERO ────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(110deg, #f0f7ff 0%, #e8f4ff 60%, #eaf5ff 100%);
+      padding: 0 0 0 60px;
+      display: grid;
+      /* minmax(0,…) lets columns SHRINK so text wraps instead of
+         overflowing and getting clipped by the visual layer */
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+      align-items: center;
+      min-height: calc(100vh - 68px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* z-index above every decorative visual layer (max z-index 5) so the
+       text can never be painted over / clipped by the wave or gradient */
+    .hero-content { position: relative; z-index: 6; padding: 80px 48px 80px 0; }
+    .hero h1 { overflow-wrap: break-word; }
+    .hero h1 { margin-bottom: 24px; }
+    .hero-body {
+      font-size: 17px;
+      color: var(--gray);
+      line-height: 1.68;
+      margin-bottom: 38px;
+      max-width: 490px;
+    }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .hero-visual { position: relative; height: 100%; min-height: calc(100vh - 68px); overflow: visible; }
+
+    .hero-photo { position: absolute; inset: 0; background: #c5dff0; overflow: hidden; z-index: 1; }
+    .hero-photo img { width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; }
+
+    /* Blue curved wave on left edge of photo (approximation until Dev export) */
+    .hero-visual::before {
+      content: '';
+      position: absolute;
+      left: -80px; top: 50%;
+      transform: translateY(-50%);
+      width: 240px; height: 130%;
+      background: var(--secondary);
+      border-radius: 50%;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .hero-visual::after {
+      content: '';
+      position: absolute;
+      left: -200px; top: 50%;
+      transform: translateY(-50%);
+      width: 260px; height: 140%;
+      background: linear-gradient(110deg, #eaf5ff 0%, #e8f4ff 60%, transparent 100%);
+      border-radius: 50%;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .hero-sparkles { position: absolute; bottom: 28%; left: -40px; z-index: 4; pointer-events: none; }
+    .phone-mockup { position: absolute; bottom: 40px; right: 40px; width: 280px; z-index: 5; }
+
+    /* Mobile hero image — hidden on desktop, shown on mobile (replaces the
+       old display:none that dropped the hero image entirely on phones) */
+    .hero-photo-mobile {
+      display: none;
+      width: 100%;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: linear-gradient(135deg, #b8deff, #a2d6ff);
+      margin-top: 28px;
+    }
+    .hero-photo-mobile img { width: 100%; height: auto; display: block; }
+
+    /* ─── PROBLEM ─────────────────────────────────────────────── */
+    .problem { background: #fff; padding: 100px 60px; }
+    .problem-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .stats-col { display: flex; flex-direction: column; gap: 16px; }
+    .stat-card { background: var(--primary); border-radius: var(--radius); padding: 30px 28px; text-align: center; }
+    .stat-number { font-size: 58px; font-weight: 600; color: var(--secondary); line-height: 1; margin-bottom: 8px; display: block; }
+    .stat-caption { font-size: 13.5px; color: rgba(255,255,255,.85); line-height: 1.45; }
+    .problem-text-col h2 { margin-bottom: 10px; }
+    .problem-text-col .section-sub { margin-bottom: 26px; }
+    .problem-body p { font-size: 16px; color: var(--dark-gray); line-height: 1.75; margin-bottom: 18px; }
+    .problem-body strong { color: var(--primary); font-weight: 600; }
+
+    /* ─── SOLUTION ────────────────────────────────────────────── */
+    .solution { background: var(--primary); padding: 100px 60px; }
+    .solution-header { text-align: center; max-width: 820px; margin: 0 auto 56px; }
+    .solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; max-width: var(--maxw); margin: 0 auto; position: relative; }
+    .sol-card { background: #fff; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column; position: relative; z-index: 1; }
+    .sol-card-head { background: var(--primary); border-bottom: 3px solid var(--secondary); padding: 26px 28px; display: flex; align-items: flex-start; gap: 16px; }
+    .sol-card-icon { width: 60px; height: 60px; background: rgba(162,214,255,.18); border-radius: 14px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .sol-card-icon img { width: 56px; height: 56px; object-fit: contain; }
+    .sol-card-title { font-size: 22px; font-weight: 600; color: #fff; padding-top: 10px; }
+    .sol-card-body { padding: 24px 28px; flex: 1; display: flex; flex-direction: column; gap: 16px; }
+    .sol-card-body p { font-size: 15px; color: var(--dark-gray); line-height: 1.68; }
+    .sol-example { background: #eef6ff; border-left: 4px solid var(--secondary); border-radius: 0 10px 10px 0; padding: 12px 16px; font-size: 13px; color: var(--gray); line-height: 1.55; margin-top: auto; }
+    .sol-example strong { color: var(--primary); font-weight: 600; }
+
+    /* ─── HOW IT WORKS ────────────────────────────────────────── */
+    .hiw { background: var(--light); padding: 100px 60px; }
+    .hiw-header { text-align: center; margin-bottom: 56px; }
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: 1000px; margin: 0 auto 32px; }
+    .step-card { background: var(--primary); border-radius: 22px; padding: 38px 30px; }
+    .step-num { font-size: 62px; font-weight: 600; color: var(--secondary); line-height: 1; margin-bottom: 18px; display: block; }
+    .step-title { font-size: 22px; font-weight: 600; color: #fff; margin-bottom: 12px; }
+    .step-desc { font-size: 15px; color: rgba(255,255,255,.82); line-height: 1.68; }
+    .hiw-note { background: #fff; border: 2.5px solid var(--secondary); border-radius: var(--radius); padding: 22px 32px; max-width: 820px; margin: 0 auto; text-align: center; font-size: 15px; color: var(--dark-gray); line-height: 1.65; }
+    .hiw-note strong { color: var(--primary); font-weight: 600; }
+
+    /* ─── MENTAL LOAD DIARIES ─────────────────────────────────── */
+    .diaries { background: #fff; padding: 100px 60px; }
+    .diaries-header { margin-bottom: 52px; }
+    .episodes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: var(--maxw); margin: 0 auto 28px; }
+    .ep-card { border-radius: 20px; overflow: hidden; cursor: pointer; position: relative; }
+    .ep-thumb { aspect-ratio: 16/9; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 14px; background: var(--primary); }
+    .ep-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; border-radius: inherit; z-index: 0; }
+    /* Distinct tints so the three placeholder thumbs don't look identical
+       (TODO: replace with real episode thumbnails) */
+    .ep-thumb--1 img { filter: none; }
+    .ep-thumb--2 img { filter: hue-rotate(25deg) saturate(1.1); }
+    .ep-thumb--3 img { filter: hue-rotate(-25deg) saturate(1.1); }
+    .play-circle { width: 56px; height: 56px; background: rgba(255,255,255,.92); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--primary); padding-left: 3px; transition: transform .2s; position: relative; z-index: 2; }
+    .ep-card:hover .play-circle { transform: scale(1.12); }
+    .ep-meta { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 18px 18px; background: linear-gradient(transparent, rgba(0,0,0,.78)); z-index: 2; }
+    .ep-badge { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,.8); margin-bottom: 5px; }
+    .ep-title { font-size: 19px; font-weight: 600; color: #fff; line-height: 1.2; }
+    .diaries-cta-note { text-align: center; font-size: 15px; color: var(--gray); }
+    .diaries-cta-note a { color: var(--primary); font-weight: 600; text-decoration: underline; }
+
+    /* ─── FEATURED DIARIES ────────────────────────────────────── */
+    .featured { background: var(--light); padding: 100px 60px; }
+    .featured-header { text-align: center; margin-bottom: 40px; }
+    .diary-list { display: flex; flex-direction: column; gap: 16px; max-width: 920px; margin: 0 auto; }
+    .diary-row { background: var(--primary); border-radius: var(--radius); padding: 28px 36px; display: grid; grid-template-columns: 220px 1fr; gap: 48px; align-items: start; cursor: pointer; transition: transform .18s, box-shadow .18s; }
+    .diary-row:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(1,0,102,.22); }
+    .diary-left .label { color: var(--secondary); margin-bottom: 4px; }
+    .diary-name { font-size: 26px; font-weight: 600; color: #fff; margin-bottom: 14px; }
+    .diary-read-btn { font-size: 14px; font-weight: 600; color: var(--secondary); display: flex; align-items: center; gap: 6px; }
+    .diary-desc { font-size: 15px; color: rgba(255,255,255,.85); line-height: 1.7; padding-top: 6px; }
+
+    /* ─── REELS ───────────────────────────────────────────────── */
+    .reels { background: #fff; padding: 100px 60px; }
+    .reels-header { text-align: center; margin-bottom: 48px; }
+    .reels-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 960px; margin: 0 auto 40px; }
+    .reel-tile { background: #8D8CB8; border-radius: var(--radius); aspect-ratio: 9/16; max-height: 380px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform .18s; position: relative; overflow: hidden; }
+    .reel-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+    .reel-tile--2 img { filter: hue-rotate(20deg); }
+    .reel-tile--3 img { filter: hue-rotate(-20deg); }
+    .reel-tile:hover { transform: scale(1.025); }
+    .reel-tile .play-circle { z-index: 1; }
+    .social-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .social-pill { display: flex; align-items: center; gap: 8px; background: var(--light); border: 1.5px solid rgba(1,0,102,.14); border-radius: 50px; padding: 10px 22px; font-size: 14px; font-weight: 600; color: var(--primary); text-decoration: none; transition: background .18s, border-color .18s; }
+    .social-pill:hover { background: var(--secondary); border-color: var(--secondary); }
+    .social-icon { font-size: 16px; }
+
+    /* ─── SIGNUP FORM ─────────────────────────────────────────── */
+    .signup { background: var(--primary); padding: 100px 60px; }
+    .signup-inner { max-width: 680px; margin: 0 auto; }
+    .signup .label { text-align: center; }
+    .signup h2 { color: #fff; text-align: center; font-size: clamp(36px, 4vw, 52px); margin-bottom: 14px; }
+    .signup-sub { text-align: center; font-size: 16px; color: rgba(255,255,255,.85); line-height: 1.65; margin-bottom: 40px; }
+    .form-group { margin-bottom: 14px; }
+    .form-label { display: block; font-size: 14px; font-weight: 600; color: rgba(255,255,255,.92); margin-bottom: 6px; }
+    .req { color: var(--secondary); }
+    .form-input, .form-select {
+      width: 100%; padding: 17px 20px; background: #fff;
+      border: 2.5px solid transparent; border-radius: 12px;
+      font-family: inherit; font-size: 16px; color: var(--dark-gray);
+      transition: border-color .2s; -webkit-appearance: none; appearance: none;
+    }
+    .form-input::placeholder { color: #999; }
+    .form-input:focus, .form-select:focus { outline: none; border-color: var(--secondary); }
+    .form-input:invalid:not(:placeholder-shown) { border-color: #ff8a8a; }
+    .select-wrap { position: relative; }
+    .select-wrap::after { content: '▾'; position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: var(--gray); pointer-events: none; font-size: 16px; }
+    .btn-cta {
+      width: 100%; background: var(--secondary); color: var(--primary);
+      border: none; padding: 20px; border-radius: 12px; font-family: inherit;
+      font-size: 20px; font-weight: 600; cursor: pointer; margin-top: 10px;
+      transition: background .18s, transform .18s, box-shadow .18s;
+    }
+    .btn-cta:hover { background: var(--secondary-2); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(162,214,255,.45); }
+    .btn-cta:disabled { opacity: .6; cursor: wait; transform: none; }
+    .form-privacy { text-align: center; font-size: 13px; color: rgba(255,255,255,.65); margin-top: 16px; }
+    .form-error { display: none; background: rgba(255,138,138,.15); border: 1px solid #ff8a8a; color: #ffd9d9; border-radius: 12px; padding: 14px 18px; font-size: 14px; margin-top: 14px; text-align: center; }
+
+    /* Success state */
+    .form-success { display: none; text-align: center; background: #fff; border-radius: 22px; padding: 48px 36px; }
+    .form-success .check { width: 64px; height: 64px; border-radius: 50%; background: var(--secondary); color: var(--primary); font-size: 32px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .form-success h3 { color: var(--primary); font-size: 28px; font-weight: 600; margin-bottom: 10px; }
+    .form-success p { color: var(--gray); font-size: 16px; line-height: 1.6; }
+
+    /* ─── FOOTER ──────────────────────────────────────────────── */
+    footer { background: var(--primary); border-top: 1px solid rgba(162,214,255,.15); padding: 22px 60px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    /* contrast fix: was rgba(255,255,255,.42) */
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,.62); }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────────── */
+    /* Tablet */
+    @media (max-width: 1024px) {
+      .nav { padding: 0 32px; gap: 16px; }
+      .nav-links { gap: 22px; }
+      .problem, .solution, .hiw, .diaries, .featured, .reels, .signup { padding-left: 40px; padding-right: 40px; }
+      .steps-grid { gap: 16px; }
+
+      /* Two-column hero needs real width — stack it below 1024px and
+         swap the full-bleed composition for the mobile-friendly image */
+      .hero { grid-template-columns: 1fr; padding: 56px 40px 64px; min-height: auto; }
+      .hero-content { padding: 0; }
+      .hero-body { max-width: none; }
+      .hero-visual { display: none; }
+      .hero-photo-mobile { display: block; }
+    }
+
+    /* Phone — implements the designer's dedicated mobile layout intent */
+    @media (max-width: 900px) {
+      .nav { padding: 0 20px; }
+      .nav-links {
+        position: absolute;
+        top: 68px; left: 0; right: 0;
+        flex-direction: column;
+        background: #fff;
+        gap: 0;
+        border-bottom: 1px solid rgba(1,0,102,.08);
+        box-shadow: 0 10px 30px rgba(1,0,102,.08);
+        display: none;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links li { width: 100%; }
+      .nav-link--cta { display: block; } /* show waitlist link in mobile menu */
+      .nav-links a { display: block; padding: 16px 24px; border-top: 1px solid rgba(1,0,102,.06); }
+      .nav-toggle { display: block; }
+      .nav-cta { display: none; } /* CTA lives in the menu / hero on mobile */
+
+      /* Hero now STACKS and keeps its image instead of hiding it */
+      .hero { grid-template-columns: 1fr; padding: 48px 24px 56px; min-height: auto; }
+      .hero-content { padding: 0; }
+      .hero-body { max-width: none; }
+      .hero-visual { display: none; }       /* desktop full-bleed composition off */
+      .hero-photo-mobile { display: block; } /* mobile-friendly image on */
+
+      .problem { padding: 64px 24px; }
+      .problem-inner { grid-template-columns: 1fr; gap: 36px; }
+      .solution { padding: 64px 24px; }
+      .solution-grid { grid-template-columns: 1fr; }
+      .hiw { padding: 64px 24px; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .diaries { padding: 64px 24px; }
+      .episodes-grid { grid-template-columns: 1fr; max-width: 420px; }
+      .featured { padding: 64px 24px; }
+      .diary-row { grid-template-columns: 1fr; gap: 16px; padding: 24px 26px; }
+      .reels { padding: 64px 24px; }
+      .reels-grid { grid-template-columns: repeat(2, 1fr); max-width: 360px; }
+      .signup { padding: 64px 24px; }
+      footer { padding: 22px 24px; justify-content: center; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .reels-grid { grid-template-columns: 1fr; max-width: 260px; }
+      .hero-ctas .btn { flex: 1; text-align: center; }
+    }
+
+    /* Respect reduced-motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ══════════════════════════════════════════════════════ -->
+  <nav class="nav">
+    <a href="#top" class="nav-logo" aria-label="NestGenie home">
+      <!-- CDN-ASSET: logo -->
+      <img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a317a8c6dd61c546ad1d249.svg" alt="NestGenie" style="height:40px;width:auto;display:block;" />
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#problem">The Problem</a></li>
+      <li><a href="#solution">The Solution</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#diaries">Mental Load Diaries</a></li>
+      <li><a href="#reels">Reels</a></li>
+      <li class="nav-link--cta"><a href="#signup">Join the Waitlist</a></li>
+    </ul>
+    <a href="#signup" class="btn btn--primary nav-cta">Join the Waitlist</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ══ HERO ══════════════════════════════════════════════════════ -->
+  <section class="hero" id="top">
+    <div class="hero-content">
+      <h1>Your Always-On<br>AI Parenting Partner</h1>
+      <p class="hero-body">
+        A Chief of Staff who thinks ahead and a Personal Assistant who gets things done — all through text messages and voice calls. Real, practical help from a team that knows your family, your vibe, your parenting style, and what makes your household tick.
+      </p>
+      <div class="hero-ctas">
+        <a href="#signup" class="btn btn--primary">Join the Waitlist</a>
+        <a href="#how" class="btn btn--secondary">See How it Works</a>
+      </div>
+
+      <!-- Mobile-only hero image (keeps the visual on phones) -->
+      <div class="hero-photo-mobile">
+        <!-- CDN-ASSET: hero photo -->
+        <img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a3179810c03f3dfbe6df283.svg"
+             alt="A parent and child cuddling" loading="lazy"
+             onerror="this.parentElement.style.minHeight='220px';this.remove();" />
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div style="position:absolute;inset:0;z-index:0;pointer-events:none;">
+        <!-- CDN-ASSET: hero background graphic -->
+        <img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a309159b9af5312bc67973b.svg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="hero-photo">
+        <!-- CDN-ASSET: hero photo -->
+        <img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a3179810c03f3dfbe6df283.svg"
+             alt="A parent and child cuddling"
+             onerror="this.style.background='linear-gradient(135deg,#b8deff,#a2d6ff)'" />
+      </div>
+      <div class="hero-sparkles">
+        <!-- CDN-ASSET: sparkle decoration -->
+        <img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a308f32bc11d12c0be3fd52.svg" alt="" style="width:90px;height:auto;display:block" />
+      </div>
+      <div class="phone-mockup">
+        <!-- CDN-ASSET: phone mockup -->
+        <img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a309159a7336264a59e4e8b.svg" alt="NestGenie chat on a phone" style="width:100%;height:auto;display:block;border-radius:22px;" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ THE PROBLEM ════════════════════════════════════════════════ -->
+  <section class="problem" id="problem">
+    <div class="problem-inner">
+      <div class="stats-col">
+        <div class="stat-card">
+          <span class="stat-number">79%</span>
+          <p class="stat-caption">of repetitive daily responsibilities — childcare, cleaning, logistics — fall on mothers.</p>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">71%</span>
+          <p class="stat-caption">of household mental labor (planning, anticipating, coordinating) is managed by moms.</p>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">6AM</span>
+          <p class="stat-caption">The day starts before it starts — lunches to pack, meds to refill, schedules to coordinate.</p>
+        </div>
+      </div>
+      <div class="problem-text-col">
+        <span class="label">The Problem</span>
+        <h2>You're Not Failing. You're Carrying Too Much.</h2>
+        <p class="section-sub">Modern parenting involves an invisible, relentless management layer that researchers call cognitive labor, the mental load.</p>
+        <div class="problem-body">
+          <p>Modern parenting comes with an invisible workload researchers call cognitive labor. In addition to handling 79% of repetitive daily responsibilities, mothers also manage 71% of household mental labor: remembering appointments, tracking medications, coordinating schedules, planning meals, and anticipating countless family needs.</p>
+          <p>For many parents, that work starts before the day officially begins. By 6 AM, lunches need packing, calendars need organizing, and important details need attention. While businesses rely on teams, assistants, and systems to stay ahead of complex operations, the person managing a family is often expected to keep everything running from memory.</p>
+          <p>The tools available today weren't built for that reality. Calendar apps require constant manual input, and smart speakers only respond when asked. Neither actively helps manage the mental load of family life.</p>
+          <p><strong>That gap is why we built NestGenie.</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ THE SOLUTION ═══════════════════════════════════════════════ -->
+  <section class="solution" id="solution">
+    <div class="solution-header">
+      <span class="label label--light">The Solution</span>
+      <h2 class="light">A Chief of Staff Who Thinks Ahead. A Personal Assistant Who Gets It Done.</h2>
+      <p class="section-sub light">NestGenie combines two things no other tool offers together: the strategic thinking of a Chief of Staff who anticipates what your family needs, and the hands-on execution of a Personal Assistant who handles the details.</p>
+    </div>
+
+    <div class="solution-grid">
+      <div class="sol-card">
+        <div class="sol-card-head">
+          <!-- CDN-ASSET: solution icon 1 -->
+          <div class="sol-card-icon"><img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a317da122582c14f12d6986.svg" alt="" /></div>
+          <div class="sol-card-title">Your Personal Assistant</div>
+        </div>
+        <div class="sol-card-body">
+          <p>NestGenie doesn't just remind you — it handles it. Meal planning, grocery orders, finding activities, scheduling appointments, researching schools. Like a real Personal Assistant, you tell it what you need and it gets it done.</p>
+          <div class="sol-example"><strong>"Find a swim class for Ella on Saturdays"</strong> → researches local options, compares schedules and prices, presents the top three with one-tap enrollment.</div>
+        </div>
+      </div>
+
+      <div class="sol-card">
+        <div class="sol-card-head">
+          <!-- CDN-ASSET: solution icon 2 -->
+          <div class="sol-card-icon"><img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a317db60c03f3dfbe6f6b55.svg" alt="" /></div>
+          <div class="sol-card-title">Your Chief of Staff</div>
+        </div>
+        <div class="sol-card-body">
+          <p>A Chief of Staff thinks ahead so you don't have to. NestGenie anticipates what's coming, offers evidence-based parenting guidance, and connects the dots across your family's life. At 2 AM when your toddler won't sleep, it's there with research-backed advice tailored to your child.</p>
+          <div class="sol-example"><strong>"Marcus keeps waking up screaming"</strong> → personalized guidance based on pediatric sleep science, your child's age, and what you've already tried.</div>
+        </div>
+      </div>
+
+      <div class="sol-card">
+        <div class="sol-card-head">
+          <!-- CDN-ASSET: solution icon 3 -->
+          <div class="sol-card-icon"><img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a317dd8602476018d5bc9c9.svg" alt="" /></div>
+          <div class="sol-card-title">Your Parenting Guru</div>
+        </div>
+        <div class="sol-card-body">
+          <p>Every parent is guided by different voices — the researchers, authors, and influencers whose approach just clicks. Tell NestGenie who shapes your parenting philosophy, and we'll build a guidance engine aligned to the principles you already trust. Dr. Becky? Janet Lansbury? Big Little Feelings? Your guru, your rules. And you can always tweak it as your family evolves.</p>
+          <div class="sol-example"><strong>"We follow Janet Lansbury's RIE approach"</strong> → NestGenie's guidance reflects respectful parenting principles in every recommendation, from tantrums to transitions.</div>
+        </div>
+      </div>
+
+      <div class="sol-card">
+        <div class="sol-card-head">
+          <!-- CDN-ASSET: solution icon 4 -->
+          <div class="sol-card-icon"><img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a317deddd7879239a3c955c.svg" alt="" /></div>
+          <div class="sol-card-title">Your Milestone Tracker</div>
+        </div>
+        <div class="sol-card-body">
+          <p>NestGenie tracks your child's development against CDC milestone data — so you always know where they are and what to look for next. First words, first steps, first smile. But it's more than a checklist. NestGenie automatically builds a family diary along the way, capturing the moments that matter — first day of daycare, first time putting their head underwater at the pool — so you have a keepsake you'll treasure forever, not just a medical record.</p>
+          <div class="sol-example"><strong>"Ella took her first steps today!"</strong> → Logged as a milestone, saved to Ella's diary with the date, and NestGenie updates her development profile. You'll get a beautiful timeline you can look back on for years.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ HOW IT WORKS ═══════════════════════════════════════════════ -->
+  <section class="hiw" id="how">
+    <div class="hiw-header">
+      <span class="label">How It Works</span>
+      <h2>Simple as Texting a Friend</h2>
+      <p class="section-sub">No app to download. No interface to learn. NestGenie works through the tools you already use every day.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <span class="step-num">1</span>
+        <div class="step-title">Text or Call</div>
+        <p class="step-desc">Send a text message or make a voice call to NestGenie — just like you would a friend, partner, or your own mother.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">2</span>
+        <div class="step-title">NestGenie Gets to Work</div>
+        <p class="step-desc">Your Chief of Staff thinks ahead while your Personal Assistant takes action — both drawing on everything they know about your family.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">3</span>
+        <div class="step-title">You Approve or Adjust</div>
+        <p class="step-desc">Review what NestGenie found, approve with a quick "yes," or tweak the details. You stay in control; it does the heavy lifting.</p>
+      </div>
+    </div>
+    <div class="hiw-note">
+      <strong>Works on any phone.</strong> SMS works even on flip phones — no smartphone required. Voice calls mean you can get help while feeding the baby, driving, or cooking dinner. Zero learning curve.
+    </div>
+  </section>
+
+  <!-- ══ MENTAL LOAD DIARIES ═══════════════════════════════════════ -->
+  <section class="diaries" id="diaries">
+    <div class="diaries-header">
+      <span class="label">The Mental Load Diaries</span>
+      <h2>Real Stories. Real Chaos. Real Talk.</h2>
+      <p class="section-sub">A vlog series about what parenting actually looks like — the invisible labor, the 3 AM decisions, the beautiful mess of it all. No filters, no judgment, just honesty.</p>
+    </div>
+    <div class="episodes-grid">
+      <div class="ep-card">
+        <div class="ep-thumb ep-thumb--1">
+          <!-- CDN-ASSET: episode 1 thumbnail (placeholder — needs real thumb) -->
+          <img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a318168dd7879239a3f3e9d.svg" alt="" />
+          <div class="play-circle">▶</div>
+          <div class="ep-meta"><div class="ep-badge">Episode One</div><div class="ep-title">Bailey's Story: No Parent Should Do This Alone</div></div>
+        </div>
+      </div>
+      <div class="ep-card">
+        <div class="ep-thumb ep-thumb--2">
+          <!-- CDN-ASSET: episode 2 thumbnail (placeholder) -->
+          <img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a318168dd7879239a3f3e9d.svg" alt="" />
+          <div class="play-circle">▶</div>
+          <div class="ep-meta"><div class="ep-badge">Episode 2 — Coming Soon</div><div class="ep-title">The List That Never Ends</div></div>
+        </div>
+      </div>
+      <div class="ep-card">
+        <div class="ep-thumb ep-thumb--3">
+          <!-- CDN-ASSET: episode 3 thumbnail (placeholder) -->
+          <img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a318168dd7879239a3f3e9d.svg" alt="" />
+          <div class="play-circle">▶</div>
+          <div class="ep-meta"><div class="ep-badge">Episode 3 — Coming Soon</div><div class="ep-title">The 47th Decision Before 9 AM</div></div>
+        </div>
+      </div>
+    </div>
+    <p class="diaries-cta-note">New episodes dropping soon. <a href="#signup">Join the waitlist</a> to get notified when the first episode goes live.</p>
+  </section>
+
+  <!-- ══ FEATURED DIARY PROFILES ═══════════════════════════════════ -->
+  <section class="featured">
+    <div class="featured-header">
+      <span class="label">The Mental Load Diaries</span>
+      <h2>Meet the Families</h2>
+    </div>
+    <div class="diary-list">
+      <div class="diary-row">
+        <div class="diary-left">
+          <span class="label label--light">Featured Diary</span>
+          <div class="diary-name">Meet Claire</div>
+          <div class="diary-read-btn">Read Her Entries &#9660;</div>
+        </div>
+        <p class="diary-desc">A stay-at-home mom who is homeschooling her children who are ages 8 and under. Her husband's job requires him to be away for extended periods of time and he also has a second job to make ends meet.</p>
+      </div>
+      <div class="diary-row">
+        <div class="diary-left">
+          <span class="label label--light">Featured Diary</span>
+          <div class="diary-name">Meet Dani</div>
+          <div class="diary-read-btn">Read Her Entries &#9660;</div>
+        </div>
+        <p class="diary-desc">A mom who works the opposite shifts as her husband to always ensure that someone is going to be around to help take care of their children because they have no village around them.</p>
+      </div>
+      <div class="diary-row">
+        <div class="diary-left">
+          <span class="label label--light">Featured Diary</span>
+          <div class="diary-name">Meet Simone</div>
+          <div class="diary-read-btn">Read Her Entries &#9660;</div>
+        </div>
+        <p class="diary-desc">A mom who has two little kids and is also attempting to start up her own small business. They don't have any village around them and her husband works full-time.</p>
+      </div>
+      <div class="diary-row">
+        <div class="diary-left">
+          <span class="label label--light">Featured Diary</span>
+          <div class="diary-name">Meet Renee</div>
+          <div class="diary-read-btn">Read Her Entries &#9660;</div>
+        </div>
+        <p class="diary-desc">A single-mom who is trying to make ends meet. She is barely surviving and just wants to make sure that she is giving her kids the best that she can. One of her children has been diagnosed with ADHD which complicates things because he is often out of control.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ REELS ══════════════════════════════════════════════════════ -->
+  <section class="reels" id="reels">
+    <div class="reels-header">
+      <span class="label">Follow Along</span>
+      <h2>Catch Us on the Reels</h2>
+      <p class="section-sub">Quick, real, relatable clips about mental load, parenting wins, and building NestGenie from the trenches.</p>
+    </div>
+    <div class="reels-grid">
+      <!-- CDN-ASSET: reel thumbnails (placeholders) -->
+      <div class="reel-tile reel-tile--1"><img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a318168dd7879239a3f3e9d.svg" alt="" /><div class="play-circle">▶</div></div>
+      <div class="reel-tile reel-tile--2"><img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a318168dd7879239a3f3e9d.svg" alt="" /><div class="play-circle">▶</div></div>
+      <div class="reel-tile reel-tile--3"><img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a318168dd7879239a3f3e9d.svg" alt="" /><div class="play-circle">▶</div></div>
+    </div>
+    <div class="social-row">
+      <!-- TODO: replace # with real social URLs -->
+      <a href="#" class="social-pill"><span class="social-icon" aria-hidden="true">📸</span> Instagram</a>
+      <a href="#" class="social-pill"><span class="social-icon" aria-hidden="true">🎵</span> TikTok</a>
+      <a href="#" class="social-pill"><span class="social-icon" aria-hidden="true">👍</span> Facebook</a>
+    </div>
+  </section>
+
+  <!-- ══ SIGNUP FORM ════════════════════════════════════════════════ -->
+  <section class="signup" id="signup">
+    <div class="signup-inner">
+      <div id="form-wrap">
+        <span class="label label--light">Early Access</span>
+        <h2>Be First in Line</h2>
+        <p class="signup-sub">Join the waitlist for the family Chief of Staff and Personal Assistant you've been wishing for. Early members get priority access and founding-family pricing.</p>
+
+        <form id="waitlist-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="name">Your Name <span class="req" aria-hidden="true">*</span></label>
+            <input class="form-input" type="text" id="name" name="name" placeholder="First Name" required autocomplete="given-name" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address <span class="req" aria-hidden="true">*</span></label>
+            <input class="form-input" type="email" id="email" name="email" placeholder="you@email.com" required autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="kids">How many kids are in your household?</label>
+            <div class="select-wrap">
+              <select class="form-select" id="kids" name="kids">
+                <option value="" disabled selected>Select one</option>
+                <option>1</option><option>2</option><option>3</option><option>4 or more</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="hardest">What's the hardest part of your week?</label>
+            <div class="select-wrap">
+              <select class="form-select" id="hardest" name="hardest">
+                <option value="" disabled selected>Select one</option>
+                <option>Keeping track of schedules</option>
+                <option>Managing medical needs</option>
+                <option>Meal planning and groceries</option>
+                <option>Finding childcare / activities</option>
+                <option>Doing it all without support</option>
+                <option>Everything, all at once</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="source">How did you hear about NestGenie?</label>
+            <div class="select-wrap">
+              <select class="form-select" id="source" name="source">
+                <option value="" disabled selected>Select one</option>
+                <option>Instagram</option><option>TikTok</option><option>Facebook</option>
+                <option>A friend or family member</option><option>Search engine</option><option>Other</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn-cta" id="submit-btn">Join the Waitlist</button>
+          <p class="form-error" id="form-error">Something went wrong sending your details. Please try again, or email us directly.</p>
+          <p class="form-privacy">We respect your inbox. No spam, ever. Unsubscribe anytime.</p>
+        </form>
+      </div>
+
+      <!-- Success state (shown after submit) -->
+      <div class="form-success" id="form-success" role="status" aria-live="polite">
+        <div class="check" aria-hidden="true">✓</div>
+        <h3>You're on the list!</h3>
+        <p>Thanks for joining the NestGenie waitlist. We'll be in touch with early access and founding-family details soon.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ═════════════════════════════════════════════════════ -->
+  <footer>
+    <a href="#top" class="footer-logo" aria-label="Back to top">
+      <!-- CDN-ASSET: footer logo -->
+      <img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a318355602476018d5fbebf.svg" alt="NestGenie" style="height:36px;width:auto;display:block;" />
+    </a>
+    <span class="footer-copy">© 2026 NestGenie. All rights reserved. Built with love (and very little sleep).</span>
+  </footer>
+
+  <script>
+    /* ─── Mobile nav toggle ─────────────────────────────────────── */
+    (function () {
+      const toggle = document.getElementById('nav-toggle');
+      const links = document.getElementById('nav-links');
+      toggle.addEventListener('click', function () {
+        const open = links.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      });
+      // Close the menu after tapping a link
+      links.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          links.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    })();
+
+    /* ─── Waitlist form ─────────────────────────────────────────────
+       HOW TO GO LIVE (for Lisa):
+       Paste the GoHighLevel **inbound webhook URL** (Workflow → Trigger:
+       Inbound Webhook) between the quotes below. The form will POST the
+       fields as JSON and the GHL workflow can create the contact + fire
+       the waitlist email sequence. No GHL page hosting required — this
+       page can live anywhere.
+       Leave it blank to run in DEMO mode (shows the success state only).
+       ──────────────────────────────────────────────────────────────── */
+    const FORM_ENDPOINT = ""; // e.g. "https://services.leadconnectorhq.com/hooks/.../webhook-trigger/..."
+
+    (function () {
+      const form = document.getElementById('waitlist-form');
+      const wrap = document.getElementById('form-wrap');
+      const success = document.getElementById('form-success');
+      const errorMsg = document.getElementById('form-error');
+      const btn = document.getElementById('submit-btn');
+
+      function showSuccess() {
+        wrap.style.display = 'none';
+        success.style.display = 'block';
+        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        errorMsg.style.display = 'none';
+
+        // Native validation for required fields
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        const data = Object.fromEntries(new FormData(form).entries());
+
+        // Demo mode — no endpoint configured yet
+        if (!FORM_ENDPOINT) { showSuccess(); return; }
+
+        btn.disabled = true;
+        btn.textContent = 'Joining…';
+        try {
+          const res = await fetch(FORM_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          if (!res.ok) throw new Error('Bad response');
+          showSuccess();
+        } catch (err) {
+          errorMsg.style.display = 'block';
+          btn.disabled = false;
+          btn.textContent = 'Join the Waitlist';
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>
