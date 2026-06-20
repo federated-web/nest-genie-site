@@ -298,12 +298,23 @@
     .featured { background: var(--light); padding: 100px 60px; }
     .featured-header { text-align: center; margin-bottom: 40px; }
     .diary-list { display: flex; flex-direction: column; gap: 16px; max-width: 920px; margin: 0 auto; }
-    .diary-row { background: var(--primary); border-radius: var(--radius); padding: 28px 36px; display: grid; grid-template-columns: 220px 1fr; gap: 48px; align-items: start; cursor: pointer; transition: transform .18s, box-shadow .18s; }
+    .diary-row { background: var(--primary); border-radius: var(--radius); padding: 28px 36px; transition: transform .18s, box-shadow .18s; }
     .diary-row:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(1,0,102,.22); }
+    .diary-main { display: grid; grid-template-columns: 220px 1fr; gap: 48px; align-items: start; }
     .diary-left .label { color: var(--secondary); margin-bottom: 4px; }
     .diary-name { font-size: 26px; font-weight: 600; color: #fff; margin-bottom: 14px; }
-    .diary-read-btn { font-size: 14px; font-weight: 600; color: var(--secondary); display: flex; align-items: center; gap: 6px; }
+    .diary-read-btn { font-size: 14px; font-weight: 600; color: var(--secondary); display: inline-flex; align-items: center; gap: 6px; background: none; border: 0; padding: 0; font-family: inherit; cursor: pointer; }
+    .diary-read-btn .chev { font-size: 11px; transition: transform .2s; }
+    .diary-read-btn[aria-expanded="true"] .chev { transform: rotate(180deg); }
     .diary-desc { font-size: 15px; color: rgba(255,255,255,.85); line-height: 1.7; padding-top: 6px; }
+    /* Expandable video entries (1–3 per family) */
+    .diary-entries { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.14); }
+    .diary-entries[hidden] { display: none; }
+    .entry-tile { aspect-ratio: 16/9; border-radius: 12px; background: linear-gradient(135deg, #06064f 0%, #3a3ab2 100%); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; cursor: pointer; transition: transform .18s; }
+    .entry-tile:hover { transform: scale(1.025); }
+    .entry-tile:hover .play-circle { transform: scale(1.12); }
+    .entry-tile video, .entry-tile iframe { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border: 0; }
+    .entry-cap { position: absolute; bottom: 0; left: 0; right: 0; padding: 14px 14px 11px; background: linear-gradient(transparent, rgba(0,0,0,.78)); font-size: 13px; font-weight: 600; color: #fff; z-index: 2; }
 
     /* ─── REELS ───────────────────────────────────────────────── */
     .reels { background: #fff; padding: 100px 60px; }
@@ -347,6 +358,12 @@
     }
     .btn-cta:hover { background: var(--secondary-2); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(162,214,255,.45); }
     .btn-cta:disabled { opacity: .6; cursor: wait; transform: none; }
+    .form-embed { background: #fff; border-radius: 16px; padding: 8px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.25); }
+    /* Cross-origin iframes can't auto-size, so we set the height responsively:
+       taller on narrow screens where the form fields stack and labels wrap. */
+    .form-embed iframe { display: block; width: 100%; height: 900px; border: 0; border-radius: 12px; }
+    @media (max-width: 768px) { .form-embed iframe { height: 1300px; } }
+    @media (max-width: 480px) { .form-embed iframe { height: 1350px; } }
     .form-privacy { text-align: center; font-size: 13px; color: rgba(255,255,255,.65); margin-top: 16px; }
     .form-error { display: none; background: rgba(255,138,138,.15); border: 1px solid #ff8a8a; color: #ffd9d9; border-radius: 12px; padding: 14px 18px; font-size: 14px; margin-top: 14px; text-align: center; }
 
@@ -378,6 +395,8 @@
       .hero-visual { display: none; }
       /* Mobile mockup puts the image ABOVE the text */
       .hero-photo-mobile { display: block; order: -1; margin: 0 0 28px; }
+      /* Center the CTA buttons once the hero stacks */
+      .hero-ctas { justify-content: center; }
     }
 
     /* Phone — implements the designer's dedicated mobile layout intent */
@@ -416,7 +435,9 @@
       .diaries { padding: 64px 24px; }
       .episodes-grid { grid-template-columns: 1fr; max-width: 420px; }
       .featured { padding: 64px 24px; }
-      .diary-row { grid-template-columns: 1fr; gap: 16px; padding: 24px 26px; }
+      .diary-row { padding: 24px 26px; }
+      .diary-main { grid-template-columns: 1fr; gap: 16px; }
+      .diary-entries { grid-template-columns: 1fr 1fr; }
       .reels { padding: 64px 24px; }
       .reels-grid { grid-template-columns: repeat(2, 1fr); max-width: 360px; }
       .signup { padding: 64px 24px; }
@@ -645,38 +666,73 @@
       <span class="label">The Mental Load Diaries</span>
       <h2>Meet the Families</h2>
     </div>
+    <!-- Each family's "Read Her Entries" toggles a panel of 1–3 videos.
+         To add a real video, replace a tile's <div class="play-circle"> with:
+           <video src="assets/claire-entry-1.mp4" controls playsinline poster="..."></video>
+         or a YouTube embed (allow="fullscreen" keeps the ⛶ button working):
+           <iframe src="https://www.youtube.com/embed/VIDEO_ID" allow="fullscreen" allowfullscreen></iframe>
+         Both play inline in the tile, with a native fullscreen button.
+         Delete any tiles a family doesn't need (1, 2, or 3). -->
     <div class="diary-list">
       <div class="diary-row">
-        <div class="diary-left">
-          <span class="label label--light">Featured Diary</span>
-          <div class="diary-name">Meet Claire</div>
-          <div class="diary-read-btn">Read Her Entries &#9660;</div>
+        <div class="diary-main">
+          <div class="diary-left">
+            <span class="label label--light">Featured Diary</span>
+            <div class="diary-name">Meet Claire</div>
+            <button class="diary-read-btn" type="button" aria-expanded="false" aria-controls="entries-claire">Read Her Entries <span class="chev" aria-hidden="true">&#9660;</span></button>
+          </div>
+          <p class="diary-desc">A stay-at-home mom who is homeschooling her children who are ages 8 and under. Her husband's job requires him to be away for extended periods of time and he also has a second job to make ends meet.</p>
         </div>
-        <p class="diary-desc">A stay-at-home mom who is homeschooling her children who are ages 8 and under. Her husband's job requires him to be away for extended periods of time and he also has a second job to make ends meet.</p>
+        <div class="diary-entries" id="entries-claire" hidden>
+          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 1</span></div>
+          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 2</span></div>
+          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 3</span></div>
+        </div>
       </div>
       <div class="diary-row">
-        <div class="diary-left">
-          <span class="label label--light">Featured Diary</span>
-          <div class="diary-name">Meet Dani</div>
-          <div class="diary-read-btn">Read Her Entries &#9660;</div>
+        <div class="diary-main">
+          <div class="diary-left">
+            <span class="label label--light">Featured Diary</span>
+            <div class="diary-name">Meet Dani</div>
+            <button class="diary-read-btn" type="button" aria-expanded="false" aria-controls="entries-dani">Read Her Entries <span class="chev" aria-hidden="true">&#9660;</span></button>
+          </div>
+          <p class="diary-desc">A mom who works the opposite shifts as her husband to always ensure that someone is going to be around to help take care of their children because they have no village around them.</p>
         </div>
-        <p class="diary-desc">A mom who works the opposite shifts as her husband to always ensure that someone is going to be around to help take care of their children because they have no village around them.</p>
+        <div class="diary-entries" id="entries-dani" hidden>
+          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 1</span></div>
+          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 2</span></div>
+          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 3</span></div>
+        </div>
       </div>
       <div class="diary-row">
-        <div class="diary-left">
-          <span class="label label--light">Featured Diary</span>
-          <div class="diary-name">Meet Simone</div>
-          <div class="diary-read-btn">Read Her Entries &#9660;</div>
+        <div class="diary-main">
+          <div class="diary-left">
+            <span class="label label--light">Featured Diary</span>
+            <div class="diary-name">Meet Simone</div>
+            <button class="diary-read-btn" type="button" aria-expanded="false" aria-controls="entries-simone">Read Her Entries <span class="chev" aria-hidden="true">&#9660;</span></button>
+          </div>
+          <p class="diary-desc">A mom who has two little kids and is also attempting to start up her own small business. They don't have any village around them and her husband works full-time.</p>
         </div>
-        <p class="diary-desc">A mom who has two little kids and is also attempting to start up her own small business. They don't have any village around them and her husband works full-time.</p>
+        <div class="diary-entries" id="entries-simone" hidden>
+          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 1</span></div>
+          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 2</span></div>
+          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 3</span></div>
+        </div>
       </div>
       <div class="diary-row">
-        <div class="diary-left">
-          <span class="label label--light">Featured Diary</span>
-          <div class="diary-name">Meet Renee</div>
-          <div class="diary-read-btn">Read Her Entries &#9660;</div>
+        <div class="diary-main">
+          <div class="diary-left">
+            <span class="label label--light">Featured Diary</span>
+            <div class="diary-name">Meet Renee</div>
+            <button class="diary-read-btn" type="button" aria-expanded="false" aria-controls="entries-renee">Read Her Entries <span class="chev" aria-hidden="true">&#9660;</span></button>
+          </div>
+          <p class="diary-desc">A single-mom who is trying to make ends meet. She is barely surviving and just wants to make sure that she is giving her kids the best that she can. One of her children has been diagnosed with ADHD which complicates things because he is often out of control.</p>
         </div>
-        <p class="diary-desc">A single-mom who is trying to make ends meet. She is barely surviving and just wants to make sure that she is giving her kids the best that she can. One of her children has been diagnosed with ADHD which complicates things because he is often out of control.</p>
+        <div class="diary-entries" id="entries-renee" hidden>
+          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 1</span></div>
+          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 2</span></div>
+          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 3</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -709,59 +765,16 @@
         <h2>Be First in Line</h2>
         <p class="signup-sub">Join the waitlist for the family Chief of Staff and Personal Assistant you've been wishing for. Early members get priority access and founding-family pricing.</p>
 
-        <form id="waitlist-form" novalidate>
-          <div class="form-group">
-            <label class="form-label" for="name">Your Name <span class="req" aria-hidden="true">*</span></label>
-            <input class="form-input" type="text" id="name" name="name" placeholder="First Name" required autocomplete="given-name" />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="email">Email Address <span class="req" aria-hidden="true">*</span></label>
-            <input class="form-input" type="email" id="email" name="email" placeholder="you@email.com" required autocomplete="email" />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="kids">How many kids are in your household?</label>
-            <div class="select-wrap">
-              <select class="form-select" id="kids" name="kids">
-                <option value="" disabled selected>Select one</option>
-                <option>1</option><option>2</option><option>3</option><option>4 or more</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="hardest">What's the hardest part of your week?</label>
-            <div class="select-wrap">
-              <select class="form-select" id="hardest" name="hardest">
-                <option value="" disabled selected>Select one</option>
-                <option>Keeping track of schedules</option>
-                <option>Managing medical needs</option>
-                <option>Meal planning and groceries</option>
-                <option>Finding childcare / activities</option>
-                <option>Doing it all without support</option>
-                <option>Everything, all at once</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="source">How did you hear about NestGenie?</label>
-            <div class="select-wrap">
-              <select class="form-select" id="source" name="source">
-                <option value="" disabled selected>Select one</option>
-                <option>Instagram</option><option>TikTok</option><option>Facebook</option>
-                <option>A friend or family member</option><option>Search engine</option><option>Other</option>
-              </select>
-            </div>
-          </div>
-          <button type="submit" class="btn-cta" id="submit-btn">Join the Waitlist</button>
-          <p class="form-error" id="form-error">Something went wrong sending your details. Please try again, or email us directly.</p>
-          <p class="form-privacy">We respect your inbox. No spam, ever. Unsubscribe anytime.</p>
-        </form>
-      </div>
-
-      <!-- Success state (shown after submit) -->
-      <div class="form-success" id="form-success" role="status" aria-live="polite">
-        <div class="check" aria-hidden="true">✓</div>
-        <h3>You're on the list!</h3>
-        <p>Thanks for joining the NestGenie waitlist. We'll be in touch with early access and founding-family details soon.</p>
+        <!-- Embedded Google Form (full waitlist / beta application) -->
+        <div class="form-embed">
+          <iframe
+            src="https://docs.google.com/forms/d/e/1FAIpQLSf0_5WCxKCV9tntuvOceAuhEKHoCWZNcS7XNUMz_NnvY0ONyQ/viewform?embedded=true"
+            title="Join the NestGenie waitlist"
+            loading="lazy"
+            width="100%"
+            height="900">Loading…</iframe>
+        </div>
+        <p class="form-privacy">We respect your inbox. No spam, ever. Unsubscribe anytime.</p>
       </div>
     </div>
   </section>
@@ -794,60 +807,15 @@
       });
     })();
 
-    /* ─── Waitlist form ─────────────────────────────────────────────
-       HOW TO GO LIVE (for Lisa):
-       Paste the GoHighLevel **inbound webhook URL** (Workflow → Trigger:
-       Inbound Webhook) between the quotes below. The form will POST the
-       fields as JSON and the GHL workflow can create the contact + fire
-       the waitlist email sequence. No GHL page hosting required — this
-       page can live anywhere.
-       Leave it blank to run in DEMO mode (shows the success state only).
-       ──────────────────────────────────────────────────────────────── */
-    const FORM_ENDPOINT = ""; // e.g. "https://services.leadconnectorhq.com/hooks/.../webhook-trigger/..."
-
+    /* ─── Diary entry dropdowns ─────────────────────────────────── */
     (function () {
-      const form = document.getElementById('waitlist-form');
-      const wrap = document.getElementById('form-wrap');
-      const success = document.getElementById('form-success');
-      const errorMsg = document.getElementById('form-error');
-      const btn = document.getElementById('submit-btn');
-
-      function showSuccess() {
-        wrap.style.display = 'none';
-        success.style.display = 'block';
-        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-
-      form.addEventListener('submit', async function (e) {
-        e.preventDefault();
-        errorMsg.style.display = 'none';
-
-        // Native validation for required fields
-        if (!form.checkValidity()) {
-          form.reportValidity();
-          return;
-        }
-
-        const data = Object.fromEntries(new FormData(form).entries());
-
-        // Demo mode — no endpoint configured yet
-        if (!FORM_ENDPOINT) { showSuccess(); return; }
-
-        btn.disabled = true;
-        btn.textContent = 'Joining…';
-        try {
-          const res = await fetch(FORM_ENDPOINT, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-          });
-          if (!res.ok) throw new Error('Bad response');
-          showSuccess();
-        } catch (err) {
-          errorMsg.style.display = 'block';
-          btn.disabled = false;
-          btn.textContent = 'Join the Waitlist';
-        }
+      document.querySelectorAll('.diary-read-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const panel = document.getElementById(btn.getAttribute('aria-controls'));
+          const open = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+          if (panel) panel.hidden = open;
+        });
       });
     })();
   </script>
