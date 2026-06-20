@@ -191,21 +191,19 @@
 
     /* ─── HERO ────────────────────────────────────────────────── */
     .hero {
-      background: linear-gradient(110deg, #f0f7ff 0%, #e8f4ff 60%, #eaf5ff 100%);
-      padding: 0 0 0 60px;
-      display: grid;
-      /* minmax(0,…) lets columns SHRINK so text wraps instead of
-         overflowing and getting clipped by the visual layer */
-      grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
-      align-items: center;
-      min-height: calc(100vh - 68px);
+      /* exact value from Figma Dev Mode */
+      background: radial-gradient(193.55% 70.99% at 0.89% 113.31%, rgba(162, 214, 255, 0.20) 34.54%, rgba(255, 255, 255, 0.20) 93.27%), #FFF;
+      padding: 0;
       position: relative;
+      display: flex;
+      align-items: center;
+      min-height: clamp(470px, 41vw, 700px);
       overflow: hidden;
     }
 
     /* z-index above every decorative visual layer (max z-index 5) so the
        text can never be painted over / clipped by the wave or gradient */
-    .hero-content { position: relative; z-index: 6; padding: 80px 48px 80px 0; }
+    .hero-content { position: relative; z-index: 2; width: 52%; max-width: 660px; padding: 40px 40px 40px 60px; }
     .hero h1 { overflow-wrap: break-word; }
     .hero h1 { margin-bottom: 24px; }
     .hero-body {
@@ -213,51 +211,24 @@
       color: var(--gray);
       line-height: 1.68;
       margin-bottom: 38px;
-      max-width: 490px;
+      max-width: 590px;
     }
     .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
 
-    .hero-visual { position: relative; height: 100%; min-height: calc(100vh - 68px); overflow: visible; }
-
-    .hero-photo { position: absolute; inset: 0; background: #c5dff0; overflow: hidden; z-index: 1; }
-    .hero-photo img { width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; }
-
-    /* Blue curved wave on left edge of photo (approximation until Dev export) */
-    .hero-visual::before {
-      content: '';
-      position: absolute;
-      left: -80px; top: 50%;
-      transform: translateY(-50%);
-      width: 240px; height: 130%;
-      background: var(--secondary);
-      border-radius: 50%;
-      z-index: 2;
-      pointer-events: none;
-    }
-    .hero-visual::after {
-      content: '';
-      position: absolute;
-      left: -200px; top: 50%;
-      transform: translateY(-50%);
-      width: 260px; height: 140%;
-      background: linear-gradient(110deg, #eaf5ff 0%, #e8f4ff 60%, transparent 100%);
-      border-radius: 50%;
-      z-index: 3;
-      pointer-events: none;
-    }
-
-    .hero-sparkles { position: absolute; bottom: 28%; left: -40px; z-index: 4; pointer-events: none; }
-    .phone-mockup { position: absolute; bottom: 40px; right: 40px; width: 280px; z-index: 5; }
+    /* The hero visual is a single image (cropped from the Figma design, with a
+       transparent background) pinned as a background layer to the hero's top,
+       bottom and right edges, behind the text — so it always stays attached and
+       scales with the hero height. */
+    .hero-visual { position: absolute; top: 0; right: 0; bottom: 0; z-index: 1; pointer-events: none; }
+    .hero-figure { height: 100%; }
+    .hero-figure img { display: block; height: 100%; width: auto; }
 
     /* Mobile hero image — hidden on desktop, shown on mobile (replaces the
        old display:none that dropped the hero image entirely on phones) */
     .hero-photo-mobile {
       display: none;
       width: 100%;
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: linear-gradient(135deg, #b8deff, #a2d6ff);
-      margin-top: 28px;
+      margin-top: 24px;
     }
     .hero-photo-mobile img { width: 100%; height: auto; display: block; }
 
@@ -310,13 +281,11 @@
     .diaries-header { margin-bottom: 52px; }
     .episodes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: var(--maxw); margin: 0 auto 28px; }
     .ep-card { border-radius: 20px; overflow: hidden; cursor: pointer; position: relative; }
-    .ep-thumb { aspect-ratio: 16/9; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 14px; background: var(--primary); }
+    .ep-thumb { aspect-ratio: 16/9; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 14px; background: linear-gradient(135deg, #010066 0%, #2c2ca0 100%); }
+    /* Gradient is a fallback behind the real episode photo */
+    .ep-thumb--2 { background: linear-gradient(135deg, #06064f 0%, #3a3ab2 100%); }
+    .ep-thumb--3 { background: linear-gradient(135deg, #02024a 0%, #2323a0 100%); }
     .ep-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; border-radius: inherit; z-index: 0; }
-    /* Distinct tints so the three placeholder thumbs don't look identical
-       (TODO: replace with real episode thumbnails) */
-    .ep-thumb--1 img { filter: none; }
-    .ep-thumb--2 img { filter: hue-rotate(25deg) saturate(1.1); }
-    .ep-thumb--3 img { filter: hue-rotate(-25deg) saturate(1.1); }
     .play-circle { width: 56px; height: 56px; background: rgba(255,255,255,.92); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--primary); padding-left: 3px; transition: transform .2s; position: relative; z-index: 2; }
     .ep-card:hover .play-circle { transform: scale(1.12); }
     .ep-meta { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 18px 18px; background: linear-gradient(transparent, rgba(0,0,0,.78)); z-index: 2; }
@@ -340,10 +309,9 @@
     .reels { background: #fff; padding: 100px 60px; }
     .reels-header { text-align: center; margin-bottom: 48px; }
     .reels-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 960px; margin: 0 auto 40px; }
-    .reel-tile { background: #8D8CB8; border-radius: var(--radius); aspect-ratio: 9/16; max-height: 380px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform .18s; position: relative; overflow: hidden; }
-    .reel-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-    .reel-tile--2 img { filter: hue-rotate(20deg); }
-    .reel-tile--3 img { filter: hue-rotate(-20deg); }
+    .reel-tile { background: linear-gradient(160deg, #010066 0%, #5b5bac 100%); border-radius: var(--radius); aspect-ratio: 9/16; max-height: 380px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform .18s; position: relative; overflow: hidden; }
+    .reel-tile--2 { background: linear-gradient(160deg, #0a0a72 0%, #6a6ab6 100%); }
+    .reel-tile--3 { background: linear-gradient(160deg, #02024f 0%, #5050a4 100%); }
     .reel-tile:hover { transform: scale(1.025); }
     .reel-tile .play-circle { z-index: 1; }
     .social-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
@@ -402,13 +370,14 @@
       .problem, .solution, .hiw, .diaries, .featured, .reels, .signup { padding-left: 40px; padding-right: 40px; }
       .steps-grid { gap: 16px; }
 
-      /* Two-column hero needs real width — stack it below 1024px and
-         swap the full-bleed composition for the mobile-friendly image */
-      .hero { grid-template-columns: 1fr; padding: 56px 40px 64px; min-height: auto; }
-      .hero-content { padding: 0; }
+      /* Below 1024px the desktop background image is dropped for the stacked
+         mobile hero (TODO: replace with the designer's dedicated mobile hero) */
+      .hero { display: block; padding: 40px 40px 56px; min-height: auto; }
+      .hero-content { width: 100%; max-width: none; padding: 0; display: flex; flex-direction: column; }
       .hero-body { max-width: none; }
       .hero-visual { display: none; }
-      .hero-photo-mobile { display: block; }
+      /* Mobile mockup puts the image ABOVE the text */
+      .hero-photo-mobile { display: block; order: -1; margin: 0 0 28px; }
     }
 
     /* Phone — implements the designer's dedicated mobile layout intent */
@@ -431,11 +400,11 @@
       .nav-toggle { display: block; }
       .nav-cta { display: none; } /* CTA lives in the menu / hero on mobile */
 
-      /* Hero now STACKS and keeps its image instead of hiding it */
-      .hero { grid-template-columns: 1fr; padding: 48px 24px 56px; min-height: auto; }
-      .hero-content { padding: 0; }
+      /* Hero stacks; desktop background image off, mobile photo on */
+      .hero { display: block; padding: 32px 24px 48px; min-height: auto; }
+      .hero-content { width: 100%; max-width: none; padding: 0; }
       .hero-body { max-width: none; }
-      .hero-visual { display: none; }       /* desktop full-bleed composition off */
+      .hero-visual { display: none; }       /* desktop composition off */
       .hero-photo-mobile { display: block; } /* mobile-friendly image on */
 
       .problem { padding: 64px 24px; }
@@ -502,31 +471,18 @@
 
       <!-- Mobile-only hero image (keeps the visual on phones) -->
       <div class="hero-photo-mobile">
-        <!-- Self-hosted (exported from Figma) -->
-        <img src="assets/hero.webp"
-             alt="A parent and child cuddling" loading="lazy"
-             onerror="this.parentElement.style.minHeight='220px';this.remove();" />
+        <!-- Mobile hero composition (cropped from the Figma Website Mobile design) -->
+        <img src="assets/hero-mobile.webp"
+             alt="A parent resting with their child, beside the NestGenie chat on a phone"
+             loading="lazy" />
       </div>
     </div>
 
     <div class="hero-visual" aria-hidden="true">
-      <div style="position:absolute;inset:0;z-index:0;pointer-events:none;">
-        <!-- CDN-ASSET: hero background graphic -->
-        <img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a309159b9af5312bc67973b.svg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;" />
-      </div>
-      <div class="hero-photo">
-        <!-- Self-hosted (exported from Figma) -->
-        <img src="assets/hero.webp"
-             alt="A parent and child cuddling"
-             onerror="this.style.background='linear-gradient(135deg,#b8deff,#a2d6ff)'" />
-      </div>
-      <div class="hero-sparkles">
-        <!-- CDN-ASSET: sparkle decoration -->
-        <img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a308f32bc11d12c0be3fd52.svg" alt="" style="width:90px;height:auto;display:block" />
-      </div>
-      <div class="phone-mockup">
-        <!-- CDN-ASSET: phone mockup -->
-        <img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a309159a7336264a59e4e8b.svg" alt="NestGenie chat on a phone" style="width:100%;height:auto;display:block;border-radius:22px;" />
+      <!-- Single image cropped from the Figma design: photo + phone + sparkles
+           + blue curve, exactly as composed. No per-element positioning. -->
+      <div class="hero-figure">
+        <img src="assets/hero-visual.webp" alt="A parent resting with their child, beside the NestGenie chat on a phone" />
       </div>
     </div>
   </section>
@@ -573,8 +529,8 @@
     <div class="solution-grid">
       <div class="sol-card">
         <div class="sol-card-head">
-          <!-- CDN-ASSET: solution icon 1 -->
-          <div class="sol-card-icon"><img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a317da122582c14f12d6986.svg" alt="" /></div>
+          <!-- Self-hosted (exported from Figma) -->
+          <div class="sol-card-icon"><img src="assets/icon-assistant.svg" alt="" /></div>
           <div class="sol-card-title">Your Personal Assistant</div>
         </div>
         <div class="sol-card-body">
@@ -585,8 +541,8 @@
 
       <div class="sol-card">
         <div class="sol-card-head">
-          <!-- CDN-ASSET: solution icon 2 -->
-          <div class="sol-card-icon"><img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a317db60c03f3dfbe6f6b55.svg" alt="" /></div>
+          <!-- Self-hosted (exported from Figma) -->
+          <div class="sol-card-icon"><img src="assets/icon-chief-of-staff.svg" alt="" /></div>
           <div class="sol-card-title">Your Chief of Staff</div>
         </div>
         <div class="sol-card-body">
@@ -597,8 +553,8 @@
 
       <div class="sol-card">
         <div class="sol-card-head">
-          <!-- CDN-ASSET: solution icon 3 -->
-          <div class="sol-card-icon"><img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a317dd8602476018d5bc9c9.svg" alt="" /></div>
+          <!-- Self-hosted (exported from Figma) -->
+          <div class="sol-card-icon"><img src="assets/icon-parenting-guru.svg" alt="" /></div>
           <div class="sol-card-title">Your Parenting Guru</div>
         </div>
         <div class="sol-card-body">
@@ -609,8 +565,8 @@
 
       <div class="sol-card">
         <div class="sol-card-head">
-          <!-- CDN-ASSET: solution icon 4 -->
-          <div class="sol-card-icon"><img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a317deddd7879239a3c955c.svg" alt="" /></div>
+          <!-- Self-hosted (exported from Figma) -->
+          <div class="sol-card-icon"><img src="assets/icon-milestone-tracker.svg" alt="" /></div>
           <div class="sol-card-title">Your Milestone Tracker</div>
         </div>
         <div class="sol-card-body">
@@ -660,24 +616,21 @@
     <div class="episodes-grid">
       <div class="ep-card">
         <div class="ep-thumb ep-thumb--1">
-          <!-- CDN-ASSET: episode 1 thumbnail (placeholder — needs real thumb) -->
-          <img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a318168dd7879239a3f3e9d.svg" alt="" />
+          <img src="assets/episode-1.webp" alt="" />
           <div class="play-circle">▶</div>
           <div class="ep-meta"><div class="ep-badge">Episode One</div><div class="ep-title">Bailey's Story: No Parent Should Do This Alone</div></div>
         </div>
       </div>
       <div class="ep-card">
         <div class="ep-thumb ep-thumb--2">
-          <!-- CDN-ASSET: episode 2 thumbnail (placeholder) -->
-          <img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a318168dd7879239a3f3e9d.svg" alt="" />
+          <img src="assets/episode-2.webp" alt="" />
           <div class="play-circle">▶</div>
           <div class="ep-meta"><div class="ep-badge">Episode 2 — Coming Soon</div><div class="ep-title">The List That Never Ends</div></div>
         </div>
       </div>
       <div class="ep-card">
         <div class="ep-thumb ep-thumb--3">
-          <!-- CDN-ASSET: episode 3 thumbnail (placeholder) -->
-          <img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a318168dd7879239a3f3e9d.svg" alt="" />
+          <img src="assets/episode-3.webp" alt="" />
           <div class="play-circle">▶</div>
           <div class="ep-meta"><div class="ep-badge">Episode 3 — Coming Soon</div><div class="ep-title">The 47th Decision Before 9 AM</div></div>
         </div>
@@ -736,10 +689,10 @@
       <p class="section-sub">Quick, real, relatable clips about mental load, parenting wins, and building NestGenie from the trenches.</p>
     </div>
     <div class="reels-grid">
-      <!-- CDN-ASSET: reel thumbnails (placeholders) -->
-      <div class="reel-tile reel-tile--1"><img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a318168dd7879239a3f3e9d.svg" alt="" /><div class="play-circle">▶</div></div>
-      <div class="reel-tile reel-tile--2"><img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a318168dd7879239a3f3e9d.svg" alt="" /><div class="play-circle">▶</div></div>
-      <div class="reel-tile reel-tile--3"><img src="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a318168dd7879239a3f3e9d.svg" alt="" /><div class="play-circle">▶</div></div>
+      <!-- Branded gradient placeholders — no video thumbnails on the site yet -->
+      <div class="reel-tile reel-tile--1"><div class="play-circle">▶</div></div>
+      <div class="reel-tile reel-tile--2"><div class="play-circle">▶</div></div>
+      <div class="reel-tile reel-tile--3"><div class="play-circle">▶</div></div>
     </div>
     <div class="social-row">
       <!-- TODO: replace # with real social URLs -->

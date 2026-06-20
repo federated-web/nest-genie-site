@@ -18,3 +18,7 @@ assets/_preview_footer_logo.png
 # Local env / secrets — never commit the live form webhook URL
 .env
 .env.*
+assets/phone-mockup.svg
+
+# raw full-page Figma export (23MB source)
+Frame 5143*.png
