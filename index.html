@@ -308,9 +308,12 @@
     .diary-read-btn[aria-expanded="true"] .chev { transform: rotate(180deg); }
     .diary-desc { font-size: 15px; color: rgba(255,255,255,.85); line-height: 1.7; padding-top: 6px; }
     /* Expandable video entries (1–3 per family) */
-    .diary-entries { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.14); }
+    .diary-entries { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.14); align-items: start; }
     .diary-entries[hidden] { display: none; }
     .entry-tile { aspect-ratio: 16/9; border-radius: 12px; background: linear-gradient(135deg, #06064f 0%, #3a3ab2 100%); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; cursor: pointer; transition: transform .18s; }
+    /* Video tiles take their clip's native shape (portrait reels / 4:3) instead of the default 16:9 */
+    .entry-tile--portrait { aspect-ratio: 9/16; }
+    .entry-tile--43 { aspect-ratio: 4/3; }
     .entry-tile:hover { transform: scale(1.025); }
     .entry-tile:hover .play-circle { transform: scale(1.12); }
     .entry-tile video, .entry-tile iframe { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border: 0; }
@@ -325,6 +328,7 @@
     .reel-tile--3 { background: linear-gradient(160deg, #02024f 0%, #5050a4 100%); }
     .reel-tile:hover { transform: scale(1.025); }
     .reel-tile .play-circle { z-index: 1; }
+    .reel-tile iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
     .social-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
     .social-pill { display: flex; align-items: center; gap: 8px; background: var(--light); border: 1.5px solid rgba(1,0,102,.14); border-radius: 50px; padding: 10px 22px; font-size: 14px; font-weight: 600; color: var(--primary); text-decoration: none; transition: background .18s, border-color .18s; }
     .social-pill:hover { background: var(--secondary); border-color: var(--secondary); }
@@ -684,7 +688,7 @@
           <p class="diary-desc">A stay-at-home mom who is homeschooling her children who are ages 8 and under. Her husband's job requires him to be away for extended periods of time and he also has a second job to make ends meet.</p>
         </div>
         <div class="diary-entries" id="entries-claire" hidden>
-          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 1</span></div>
+          <div class="entry-tile entry-tile--portrait"><iframe src="https://player.vimeo.com/video/1204063919?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Claire — Reel 1" allowfullscreen></iframe><span class="entry-cap">Entry 1</span></div>
           <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 2</span></div>
           <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 3</span></div>
         </div>
@@ -699,7 +703,7 @@
           <p class="diary-desc">A mom who works the opposite shifts as her husband to always ensure that someone is going to be around to help take care of their children because they have no village around them.</p>
         </div>
         <div class="diary-entries" id="entries-dani" hidden>
-          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 1</span></div>
+          <div class="entry-tile entry-tile--43"><iframe src="https://player.vimeo.com/video/1206021235?h=19c997858f&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Dani — Reel 1" allowfullscreen></iframe><span class="entry-cap">Entry 1</span></div>
           <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 2</span></div>
           <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 3</span></div>
         </div>
@@ -714,7 +718,7 @@
           <p class="diary-desc">A mom who has two little kids and is also attempting to start up her own small business. They don't have any village around them and her husband works full-time.</p>
         </div>
         <div class="diary-entries" id="entries-simone" hidden>
-          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 1</span></div>
+          <div class="entry-tile entry-tile--portrait"><iframe src="https://player.vimeo.com/video/1204064707?h=11f2732c64&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Simone — Reel 1" allowfullscreen></iframe><span class="entry-cap">Entry 1</span></div>
           <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 2</span></div>
           <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 3</span></div>
         </div>
@@ -729,7 +733,7 @@
           <p class="diary-desc">A single-mom who is trying to make ends meet. She is barely surviving and just wants to make sure that she is giving her kids the best that she can. One of her children has been diagnosed with ADHD which complicates things because he is often out of control.</p>
         </div>
         <div class="diary-entries" id="entries-renee" hidden>
-          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 1</span></div>
+          <div class="entry-tile entry-tile--portrait"><iframe src="https://player.vimeo.com/video/1206021057?h=30932d3ce3&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Renee — Reel 1" allowfullscreen></iframe><span class="entry-cap">Entry 1</span></div>
           <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 2</span></div>
           <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 3</span></div>
         </div>
@@ -745,9 +749,9 @@
       <p class="section-sub">Quick, real, relatable clips about mental load, parenting wins, and building NestGenie from the trenches.</p>
     </div>
     <div class="reels-grid">
-      <!-- Branded gradient placeholders — no video thumbnails on the site yet -->
-      <div class="reel-tile reel-tile--1"><div class="play-circle">▶</div></div>
-      <div class="reel-tile reel-tile--2"><div class="play-circle">▶</div></div>
+      <div class="reel-tile reel-tile--1"><iframe src="https://player.vimeo.com/video/1204064625?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Mental Load Backpack" allowfullscreen></iframe></div>
+      <div class="reel-tile reel-tile--2"><iframe src="https://player.vimeo.com/video/1204063781?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Sticky Note Overload" allowfullscreen></iframe></div>
+      <!-- Third reel: branded gradient placeholder until a clip is added -->
       <div class="reel-tile reel-tile--3"><div class="play-circle">▶</div></div>
     </div>
     <div class="social-row">
