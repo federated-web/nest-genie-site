@@ -334,6 +334,42 @@
     .social-pill:hover { background: var(--secondary); border-color: var(--secondary); }
     .social-icon { font-size: 16px; }
 
+    /* ─── VIDEO EXPAND + LIGHTBOX ─────────────────────────────── */
+    /* Small "expand" affordance in the corner of each playable tile.
+       Vimeo hides its own fullscreen button at these small sizes, so this
+       is how viewers get a large, in-site view. Injected by JS onto every
+       tile that contains an <iframe>. */
+    .video-expand {
+      position: absolute; top: 8px; right: 8px; z-index: 3;
+      width: 34px; height: 34px; padding: 0; border: 0; border-radius: 9px;
+      background: rgba(3,3,30,.5); color: #fff; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      opacity: .85; transition: opacity .18s, background .18s;
+    }
+    .video-expand:hover { opacity: 1; background: rgba(3,3,30,.78); }
+    .video-expand:focus-visible { outline: 2px solid var(--secondary); outline-offset: 2px; }
+    .video-expand svg { width: 18px; height: 18px; }
+
+    .lightbox {
+      position: fixed; inset: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(3,3,30,.82); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    }
+    .lightbox[hidden] { display: none; }
+    .lb-frame {
+      position: relative; background: #000; border-radius: 14px; overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,.6);
+    }
+    .lb-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .lb-close {
+      position: absolute; top: 18px; right: 22px; z-index: 1001;
+      width: 44px; height: 44px; border: 0; border-radius: 50%;
+      background: rgba(255,255,255,.14); color: #fff; font-size: 22px; line-height: 1;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background .18s;
+    }
+    .lb-close:hover { background: rgba(255,255,255,.3); }
+
     /* ─── SIGNUP FORM ─────────────────────────────────────────── */
     .signup { background: var(--primary); padding: 100px 60px; }
     .signup-inner { max-width: 680px; margin: 0 auto; }
@@ -688,7 +724,7 @@
           <p class="diary-desc">A stay-at-home mom who is homeschooling her children who are ages 8 and under. Her husband's job requires him to be away for extended periods of time and he also has a second job to make ends meet.</p>
         </div>
         <div class="diary-entries" id="entries-claire" hidden>
-          <div class="entry-tile entry-tile--portrait"><iframe src="https://player.vimeo.com/video/1204063919?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Claire — Reel 1" allowfullscreen></iframe><span class="entry-cap">Entry 1</span></div>
+          <div class="entry-tile entry-tile--portrait"><iframe src="https://player.vimeo.com/video/1204063919?h=df354ac8e6&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Claire — Reel 1" allowfullscreen></iframe><span class="entry-cap">Entry 1</span></div>
           <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 2</span></div>
           <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 3</span></div>
         </div>
@@ -703,7 +739,7 @@
           <p class="diary-desc">A mom who works the opposite shifts as her husband to always ensure that someone is going to be around to help take care of their children because they have no village around them.</p>
         </div>
         <div class="diary-entries" id="entries-dani" hidden>
-          <div class="entry-tile entry-tile--43"><iframe src="https://player.vimeo.com/video/1206021235?h=19c997858f&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Dani — Reel 1" allowfullscreen></iframe><span class="entry-cap">Entry 1</span></div>
+          <div class="entry-tile entry-tile--portrait"><iframe src="https://player.vimeo.com/video/1206021235?h=19c997858f&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Dani — Reel 1" allowfullscreen></iframe><span class="entry-cap">Entry 1</span></div>
           <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 2</span></div>
           <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 3</span></div>
         </div>
@@ -749,8 +785,8 @@
       <p class="section-sub">Quick, real, relatable clips about mental load, parenting wins, and building NestGenie from the trenches.</p>
     </div>
     <div class="reels-grid">
-      <div class="reel-tile reel-tile--1"><iframe src="https://player.vimeo.com/video/1204064625?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Mental Load Backpack" allowfullscreen></iframe></div>
-      <div class="reel-tile reel-tile--2"><iframe src="https://player.vimeo.com/video/1204063781?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Sticky Note Overload" allowfullscreen></iframe></div>
+      <div class="reel-tile reel-tile--1"><iframe src="https://player.vimeo.com/video/1204064625?h=aaea8f77c3&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Mental Load Backpack" allowfullscreen></iframe></div>
+      <div class="reel-tile reel-tile--2"><iframe src="https://player.vimeo.com/video/1204063781?h=5087d26b43&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Sticky Note Overload" allowfullscreen></iframe></div>
       <!-- Third reel: branded gradient placeholder until a clip is added -->
       <div class="reel-tile reel-tile--3"><div class="play-circle">▶</div></div>
     </div>
@@ -792,6 +828,12 @@
     <span class="footer-copy">© 2026 NestGenie. All rights reserved. Built with love (and very little sleep).</span>
   </footer>
 
+  <!-- ══ VIDEO LIGHTBOX ═════════════════════════════════════════════ -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Video player" hidden>
+    <button class="lb-close" id="lb-close" type="button" aria-label="Close video">&#10005;</button>
+    <div class="lb-frame" id="lb-frame"></div>
+  </div>
+
   <script>
     /* ─── Mobile nav toggle ─────────────────────────────────────── */
     (function () {
@@ -821,6 +863,73 @@
           if (panel) panel.hidden = open;
         });
       });
+    })();
+
+    /* ─── Video expand → lightbox ───────────────────────────────── */
+    (function () {
+      const lb = document.getElementById('lightbox');
+      const frame = document.getElementById('lb-frame');
+      const closeBtn = document.getElementById('lb-close');
+      let currentAr = 9 / 16;        // width / height of the video showing
+      let lastFocus = null;          // restore focus on close
+
+      // Fit the player inside the viewport (whole video visible, no crop)
+      function sizeFrame() {
+        const availW = window.innerWidth * 0.92;
+        const availH = window.innerHeight * 0.88;
+        let w = availW, h = w / currentAr;
+        if (h > availH) { h = availH; w = h * currentAr; }
+        frame.style.width = Math.round(w) + 'px';
+        frame.style.height = Math.round(h) + 'px';
+      }
+
+      function open(src, ar) {
+        currentAr = ar || 9 / 16;
+        lastFocus = document.activeElement;
+        const url = src + (src.indexOf('?') > -1 ? '&' : '?') + 'autoplay=1';
+        const f = document.createElement('iframe');
+        f.src = url;
+        f.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share');
+        f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        f.setAttribute('allowfullscreen', '');
+        frame.innerHTML = '';
+        frame.appendChild(f);
+        sizeFrame();
+        lb.hidden = false;
+        document.body.style.overflow = 'hidden';
+        closeBtn.focus();
+      }
+
+      function close() {
+        lb.hidden = true;
+        frame.innerHTML = '';          // stops playback
+        document.body.style.overflow = '';
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+      }
+
+      // Attach an expand button to every tile that holds a video iframe
+      document.querySelectorAll('.entry-tile > iframe, .reel-tile > iframe').forEach(function (iframe) {
+        const tile = iframe.parentElement;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'video-expand';
+        btn.setAttribute('aria-label', 'Expand video');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H3v5M16 3h5v5M16 21h5v-5M8 21H3v-5"/></svg>';
+        tile.appendChild(btn);
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          let ar = 9 / 16;
+          const cs = getComputedStyle(tile).aspectRatio;
+          const m = cs && cs.match(/([\d.]+)\s*\/\s*([\d.]+)/);
+          if (m) ar = parseFloat(m[1]) / parseFloat(m[2]);
+          open(iframe.src, ar);
+        });
+      });
+
+      closeBtn.addEventListener('click', close);
+      lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !lb.hidden) close(); });
+      window.addEventListener('resize', function () { if (!lb.hidden) sizeFrame(); });
     })();
   </script>
 
