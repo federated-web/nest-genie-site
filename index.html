@@ -1,39 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- ⚠️  REMOVE BEFORE LAUNCH  ⚠️ ───────────────────────────────────
        Keeps this staging/preview draft out of search engines while it's
        hosted at a discoverable URL. DELETE this tag before going live or
        the real site will be invisible to Google. -->
-  <meta name="robots" content="noindex, nofollow" />
+  <meta name="robots" content="noindex, nofollow">
 
   <!-- ─── SEO / SOCIAL META ──────────────────────────────────────────
        TODO: confirm canonical domain + add a real OG share image
        (1200x630) once Dev access lands and assets are exported. -->
   <title>NestGenie — Your Always-On AI Parenting Partner</title>
-  <meta name="description" content="NestGenie is your family's Chief of Staff and Personal Assistant — practical, evidence-based parenting help through text and voice. Join the waitlist." />
-  <link rel="canonical" href="https://www.nestgenie.com/" />
+  <meta name="description" content="NestGenie is your family's Chief of Staff and Personal Assistant — practical, evidence-based parenting help through text and voice. Join the waitlist.">
+  <link rel="canonical" href="https://www.nestgenie.com/">
 
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="NestGenie — Your Always-On AI Parenting Partner" />
-  <meta property="og:description" content="A Chief of Staff who thinks ahead and a Personal Assistant who gets things done — for your family, through text and voice." />
-  <meta property="og:url" content="https://www.nestgenie.com/" />
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="NestGenie — Your Always-On AI Parenting Partner">
+  <meta property="og:description" content="A Chief of Staff who thinks ahead and a Personal Assistant who gets things done — for your family, through text and voice.">
+  <meta property="og:url" content="https://www.nestgenie.com/">
   <!-- TODO: replace with a hosted 1200x630 share image -->
-  <meta property="og:image" content="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a317a8c6dd61c546ad1d249.svg" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="NestGenie — Your Always-On AI Parenting Partner" />
-  <meta name="twitter:description" content="A Chief of Staff who thinks ahead and a Personal Assistant who gets things done — for your family." />
+  <meta property="og:image" content="https://assets.cdn.filesafe.space/qMwpZRG6MenJEivJjfZb/media/6a317a8c6dd61c546ad1d249.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="NestGenie — Your Always-On AI Parenting Partner">
+  <meta name="twitter:description" content="A Chief of Staff who thinks ahead and a Personal Assistant who gets things done — for your family.">
 
   <!-- Favicon — square nest icon (cropped from the logo) -->
-  <link rel="icon" href="assets/favicon.png" type="image/png" />
-  <link rel="apple-touch-icon" href="assets/favicon.png" />
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/favicon.png">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- ════════════════════════════════════════════════════════════════
        ASSET NOTE FOR THE TEAM
@@ -240,12 +240,13 @@
       display: grid;
       grid-template-columns: 1fr 1.3fr;
       gap: 64px;
-      align-items: start;
+      align-items: stretch;
     }
-    .stats-col { display: flex; flex-direction: column; gap: 16px; }
-    .stat-card { background: var(--primary); border-radius: var(--radius); padding: 30px 28px; text-align: center; }
-    .stat-number { font-size: 58px; font-weight: 600; color: var(--secondary); line-height: 1; margin-bottom: 8px; display: block; }
-    .stat-caption { font-size: 13.5px; color: rgba(255,255,255,.85); line-height: 1.45; }
+    .stats-col { display: flex; flex-direction: column; gap: 20px; height: 100%; }
+    .stat-card { background: var(--primary); border-radius: var(--radius); padding: 18px 24px; display: flex; align-items: flex-start; gap: 20px; text-align: left; flex: 1; }
+    /* Nudged down so the caption's first baseline crosses near the middle of the digits */
+    .stat-number { font-size: 62px; font-weight: 600; color: var(--secondary); line-height: .85; flex: 0 0 auto; min-width: 128px; margin-top: 22px; text-align: right; }
+    .stat-caption { font-size: 19px; color: rgba(255,255,255,.9); line-height: 1.5; margin-top: 28px; }
     .problem-text-col h2 { margin-bottom: 10px; }
     .problem-text-col .section-sub { margin-bottom: 26px; }
     .problem-body p { font-size: 16px; color: var(--dark-gray); line-height: 1.75; margin-bottom: 18px; }
@@ -502,7 +503,7 @@
   <nav class="nav">
     <a href="#top" class="nav-logo" aria-label="NestGenie home">
       <!-- Self-hosted (exported from Figma) -->
-      <img src="assets/logo.png" alt="NestGenie" style="height:40px;width:auto;display:block;" />
+      <img src="assets/logo.png" alt="NestGenie" style="height:40px;width:auto;display:block;">
     </a>
     <ul class="nav-links" id="nav-links">
       <li><a href="#problem">The Problem</a></li>
@@ -535,7 +536,7 @@
         <!-- Mobile hero composition (cropped from the Figma Website Mobile design) -->
         <img src="assets/hero-mobile.webp"
              alt="A parent resting with their child, beside the NestGenie chat on a phone"
-             loading="lazy" />
+             loading="lazy">
       </div>
     </div>
 
@@ -543,7 +544,7 @@
       <!-- Single image cropped from the Figma design: photo + phone + sparkles
            + blue curve, exactly as composed. No per-element positioning. -->
       <div class="hero-figure">
-        <img src="assets/hero-visual.webp" alt="A parent resting with their child, beside the NestGenie chat on a phone" />
+        <img src="assets/hero-visual.webp" alt="A parent resting with their child, beside the NestGenie chat on a phone">
       </div>
     </div>
   </section>
@@ -591,7 +592,7 @@
       <div class="sol-card">
         <div class="sol-card-head">
           <!-- Self-hosted (exported from Figma) -->
-          <div class="sol-card-icon"><img src="assets/icon-assistant.svg" alt="" /></div>
+          <div class="sol-card-icon"><img src="assets/icon-assistant.svg" alt=""></div>
           <div class="sol-card-title">Your Personal Assistant</div>
         </div>
         <div class="sol-card-body">
@@ -603,7 +604,7 @@
       <div class="sol-card">
         <div class="sol-card-head">
           <!-- Self-hosted (exported from Figma) -->
-          <div class="sol-card-icon"><img src="assets/icon-chief-of-staff.svg" alt="" /></div>
+          <div class="sol-card-icon"><img src="assets/icon-chief-of-staff.svg" alt=""></div>
           <div class="sol-card-title">Your Chief of Staff</div>
         </div>
         <div class="sol-card-body">
@@ -615,7 +616,7 @@
       <div class="sol-card">
         <div class="sol-card-head">
           <!-- Self-hosted (exported from Figma) -->
-          <div class="sol-card-icon"><img src="assets/icon-parenting-guru.svg" alt="" /></div>
+          <div class="sol-card-icon"><img src="assets/icon-parenting-guru.svg" alt=""></div>
           <div class="sol-card-title">Your Parenting Guru</div>
         </div>
         <div class="sol-card-body">
@@ -627,7 +628,7 @@
       <div class="sol-card">
         <div class="sol-card-head">
           <!-- Self-hosted (exported from Figma) -->
-          <div class="sol-card-icon"><img src="assets/icon-milestone-tracker.svg" alt="" /></div>
+          <div class="sol-card-icon"><img src="assets/icon-milestone-tracker.svg" alt=""></div>
           <div class="sol-card-title">Your Milestone Tracker</div>
         </div>
         <div class="sol-card-body">
@@ -677,21 +678,21 @@
     <div class="episodes-grid">
       <div class="ep-card">
         <div class="ep-thumb ep-thumb--1">
-          <img src="assets/episode-1.webp" alt="" />
+          <img src="assets/episode-1.webp" alt="">
           <div class="play-circle">▶</div>
           <div class="ep-meta"><div class="ep-badge">Episode One</div><div class="ep-title">Bailey's Story: No Parent Should Do This Alone</div></div>
         </div>
       </div>
       <div class="ep-card">
         <div class="ep-thumb ep-thumb--2">
-          <img src="assets/episode-2.webp" alt="" />
+          <img src="assets/episode-2.webp" alt="">
           <div class="play-circle">▶</div>
           <div class="ep-meta"><div class="ep-badge">Episode 2 — Coming Soon</div><div class="ep-title">The List That Never Ends</div></div>
         </div>
       </div>
       <div class="ep-card">
         <div class="ep-thumb ep-thumb--3">
-          <img src="assets/episode-3.webp" alt="" />
+          <img src="assets/episode-3.webp" alt="">
           <div class="play-circle">▶</div>
           <div class="ep-meta"><div class="ep-badge">Episode 3 — Coming Soon</div><div class="ep-title">The 47th Decision Before 9 AM</div></div>
         </div>
@@ -823,7 +824,7 @@
   <footer>
     <a href="#top" class="footer-logo" aria-label="Back to top">
       <!-- Self-hosted white logo (full lockup, recolored for the navy footer) -->
-      <img src="assets/logo-white.png" alt="NestGenie" style="height:36px;width:auto;display:block;" />
+      <img src="assets/logo-white.png" alt="NestGenie" style="height:36px;width:auto;display:block;">
     </a>
     <span class="footer-copy">© 2026 NestGenie. All rights reserved. Built with love (and very little sleep).</span>
   </footer>
