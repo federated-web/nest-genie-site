@@ -260,8 +260,9 @@
     /* overflow:hidden makes this a block formatting context so it contains the
        floated icon and the title/body text wrap around it (as in the mockup) */
     .sol-card-main { overflow: hidden; margin-bottom: 18px; }
-    .sol-card-icon { float: left; width: 104px; height: 104px; margin: 4px 20px 10px 0; background: rgba(162,214,255,.3); border-radius: 20px; display: flex; align-items: center; justify-content: center; }
-    .sol-card-icon img { width: 88px; height: 88px; object-fit: contain; }
+    /* No tile background — each illustration carries its own light-blue shape */
+    .sol-card-icon { float: left; width: 148px; margin: 0 18px 6px 0; }
+    .sol-card-icon img { width: 100%; height: auto; display: block; }
     .sol-card-title { font-size: 22px; font-weight: 600; color: var(--primary); margin-bottom: 10px; }
     .sol-card-main p { font-size: 15px; color: var(--dark-gray); line-height: 1.68; }
     .sol-example { background: #eef6ff; border-left: 4px solid var(--secondary); border-radius: 0 10px 10px 0; padding: 12px 16px; font-size: 13px; color: var(--gray); line-height: 1.55; margin-top: auto; }
