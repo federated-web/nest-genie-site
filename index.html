@@ -309,9 +309,11 @@
     .diary-read-btn[aria-expanded="true"] .chev { transform: rotate(180deg); }
     .diary-desc { font-size: 15px; color: rgba(255,255,255,.85); line-height: 1.7; padding-top: 6px; }
     /* Expandable video entries (1–3 per family) */
-    .diary-entries { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.14); align-items: start; }
+    /* Flex-wrap so a family with 1–3 entries always presents cleanly (tiles keep
+       their natural size and align under the family name; no empty grid cells). */
+    .diary-entries { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.14); align-items: flex-start; }
     .diary-entries[hidden] { display: none; }
-    .entry-tile { aspect-ratio: 16/9; border-radius: 12px; background: linear-gradient(135deg, #06064f 0%, #3a3ab2 100%); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; cursor: pointer; transition: transform .18s; }
+    .entry-tile { flex: 0 0 auto; width: 220px; max-width: 100%; aspect-ratio: 16/9; border-radius: 12px; background: linear-gradient(135deg, #06064f 0%, #3a3ab2 100%); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; cursor: pointer; transition: transform .18s; }
     /* Video tiles take their clip's native shape (portrait reels / 4:3) instead of the default 16:9 */
     .entry-tile--portrait { aspect-ratio: 9/16; }
     .entry-tile--43 { aspect-ratio: 4/3; }
@@ -323,7 +325,7 @@
     /* ─── REELS ───────────────────────────────────────────────── */
     .reels { background: #fff; padding: 100px 60px; }
     .reels-header { text-align: center; margin-bottom: 48px; }
-    .reels-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 960px; margin: 0 auto 40px; }
+    .reels-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 640px; margin: 0 auto 40px; }
     .reel-tile { background: linear-gradient(160deg, #010066 0%, #5b5bac 100%); border-radius: var(--radius); aspect-ratio: 9/16; max-height: 380px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform .18s; position: relative; overflow: hidden; }
     .reel-tile--2 { background: linear-gradient(160deg, #0a0a72 0%, #6a6ab6 100%); }
     .reel-tile--3 { background: linear-gradient(160deg, #02024f 0%, #5050a4 100%); }
@@ -478,7 +480,7 @@
       .featured { padding: 64px 24px; }
       .diary-row { padding: 24px 26px; }
       .diary-main { grid-template-columns: 1fr; gap: 16px; }
-      .diary-entries { grid-template-columns: 1fr 1fr; }
+      .diary-entries { justify-content: center; }
       .reels { padding: 64px 24px; }
       .reels-grid { grid-template-columns: repeat(2, 1fr); max-width: 360px; }
       .signup { padding: 64px 24px; }
@@ -707,13 +709,13 @@
       <span class="label">The Mental Load Diaries</span>
       <h2>Meet the Families</h2>
     </div>
-    <!-- Each family's "Read Her Entries" toggles a panel of 1–3 videos.
-         To add a real video, replace a tile's <div class="play-circle"> with:
-           <video src="assets/claire-entry-1.mp4" controls playsinline poster="..."></video>
-         or a YouTube embed (allow="fullscreen" keeps the ⛶ button working):
-           <iframe src="https://www.youtube.com/embed/VIDEO_ID" allow="fullscreen" allowfullscreen></iframe>
-         Both play inline in the tile, with a native fullscreen button.
-         Delete any tiles a family doesn't need (1, 2, or 3). -->
+    <!-- Each family's "Read Her Entries" toggles a panel of 1–3 video entries.
+         The panel is a flex-wrap row, so add or remove entry tiles freely — 1, 2,
+         or 3 all lay out cleanly with no empty slots. To add an entry, copy an
+         existing tile:
+           <div class="entry-tile entry-tile--portrait"><iframe src="https://player.vimeo.com/video/VIDEO_ID?h=HASH&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Name — Reel N" allowfullscreen></iframe><span class="entry-cap">Entry N</span></div>
+         Use entry-tile--43 instead of --portrait for a 4:3 clip; omit both for 16:9.
+         The expand button + lightbox are wired up automatically for any tile with an <iframe>. -->
     <div class="diary-list">
       <div class="diary-row">
         <div class="diary-main">
@@ -726,8 +728,6 @@
         </div>
         <div class="diary-entries" id="entries-claire" hidden>
           <div class="entry-tile entry-tile--portrait"><iframe src="https://player.vimeo.com/video/1204063919?h=df354ac8e6&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Claire — Reel 1" allowfullscreen></iframe><span class="entry-cap">Entry 1</span></div>
-          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 2</span></div>
-          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 3</span></div>
         </div>
       </div>
       <div class="diary-row">
@@ -741,8 +741,6 @@
         </div>
         <div class="diary-entries" id="entries-dani" hidden>
           <div class="entry-tile entry-tile--portrait"><iframe src="https://player.vimeo.com/video/1206021235?h=19c997858f&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Dani — Reel 1" allowfullscreen></iframe><span class="entry-cap">Entry 1</span></div>
-          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 2</span></div>
-          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 3</span></div>
         </div>
       </div>
       <div class="diary-row">
@@ -756,8 +754,6 @@
         </div>
         <div class="diary-entries" id="entries-simone" hidden>
           <div class="entry-tile entry-tile--portrait"><iframe src="https://player.vimeo.com/video/1204064707?h=11f2732c64&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Simone — Reel 1" allowfullscreen></iframe><span class="entry-cap">Entry 1</span></div>
-          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 2</span></div>
-          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 3</span></div>
         </div>
       </div>
       <div class="diary-row">
@@ -771,8 +767,6 @@
         </div>
         <div class="diary-entries" id="entries-renee" hidden>
           <div class="entry-tile entry-tile--portrait"><iframe src="https://player.vimeo.com/video/1206021057?h=30932d3ce3&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Renee — Reel 1" allowfullscreen></iframe><span class="entry-cap">Entry 1</span></div>
-          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 2</span></div>
-          <div class="entry-tile"><div class="play-circle" aria-hidden="true">▶</div><span class="entry-cap">Entry 3</span></div>
         </div>
       </div>
     </div>
@@ -788,8 +782,6 @@
     <div class="reels-grid">
       <div class="reel-tile reel-tile--1"><iframe src="https://player.vimeo.com/video/1204064625?h=aaea8f77c3&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Mental Load Backpack" allowfullscreen></iframe></div>
       <div class="reel-tile reel-tile--2"><iframe src="https://player.vimeo.com/video/1204063781?h=5087d26b43&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Sticky Note Overload" allowfullscreen></iframe></div>
-      <!-- Third reel: branded gradient placeholder until a clip is added -->
-      <div class="reel-tile reel-tile--3"><div class="play-circle">▶</div></div>
     </div>
     <div class="social-row">
       <a href="https://www.instagram.com/nestgenie_ai/" target="_blank" rel="noopener" class="social-pill"><span class="social-icon" aria-hidden="true">📸</span> Instagram</a>
