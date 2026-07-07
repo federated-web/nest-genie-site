@@ -321,6 +321,8 @@
     .entry-tile:hover .play-circle { transform: scale(1.12); }
     .entry-tile video, .entry-tile iframe { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border: 0; }
     .entry-cap { position: absolute; bottom: 0; left: 0; right: 0; padding: 14px 14px 11px; background: linear-gradient(transparent, rgba(0,0,0,.78)); font-size: 13px; font-weight: 600; color: #fff; z-index: 2; }
+    /* A lone entry needs no "Entry 1" label — hide it (captions return with 2+ entries) */
+    .entry-tile:only-child .entry-cap { display: none; }
 
     /* ─── REELS ───────────────────────────────────────────────── */
     .reels { background: #fff; padding: 100px 60px; }
@@ -722,7 +724,7 @@
           <div class="diary-left">
             <span class="label label--light">Featured Diary</span>
             <div class="diary-name">Meet Claire</div>
-            <button class="diary-read-btn" type="button" aria-expanded="false" aria-controls="entries-claire">Read Her Entries <span class="chev" aria-hidden="true">&#9660;</span></button>
+            <button class="diary-read-btn" type="button" aria-expanded="false" aria-controls="entries-claire"><span class="rd-label">Read Her Entries</span> <span class="chev" aria-hidden="true">&#9660;</span></button>
           </div>
           <p class="diary-desc">A stay-at-home mom who is homeschooling her children who are ages 8 and under. Her husband's job requires him to be away for extended periods of time and he also has a second job to make ends meet.</p>
         </div>
@@ -735,7 +737,7 @@
           <div class="diary-left">
             <span class="label label--light">Featured Diary</span>
             <div class="diary-name">Meet Dani</div>
-            <button class="diary-read-btn" type="button" aria-expanded="false" aria-controls="entries-dani">Read Her Entries <span class="chev" aria-hidden="true">&#9660;</span></button>
+            <button class="diary-read-btn" type="button" aria-expanded="false" aria-controls="entries-dani"><span class="rd-label">Read Her Entries</span> <span class="chev" aria-hidden="true">&#9660;</span></button>
           </div>
           <p class="diary-desc">A mom who works the opposite shifts as her husband to always ensure that someone is going to be around to help take care of their children because they have no village around them.</p>
         </div>
@@ -748,7 +750,7 @@
           <div class="diary-left">
             <span class="label label--light">Featured Diary</span>
             <div class="diary-name">Meet Simone</div>
-            <button class="diary-read-btn" type="button" aria-expanded="false" aria-controls="entries-simone">Read Her Entries <span class="chev" aria-hidden="true">&#9660;</span></button>
+            <button class="diary-read-btn" type="button" aria-expanded="false" aria-controls="entries-simone"><span class="rd-label">Read Her Entries</span> <span class="chev" aria-hidden="true">&#9660;</span></button>
           </div>
           <p class="diary-desc">A mom who has two little kids and is also attempting to start up her own small business. They don't have any village around them and her husband works full-time.</p>
         </div>
@@ -761,7 +763,7 @@
           <div class="diary-left">
             <span class="label label--light">Featured Diary</span>
             <div class="diary-name">Meet Renee</div>
-            <button class="diary-read-btn" type="button" aria-expanded="false" aria-controls="entries-renee">Read Her Entries <span class="chev" aria-hidden="true">&#9660;</span></button>
+            <button class="diary-read-btn" type="button" aria-expanded="false" aria-controls="entries-renee"><span class="rd-label">Read Her Entries</span> <span class="chev" aria-hidden="true">&#9660;</span></button>
           </div>
           <p class="diary-desc">A single-mom who is trying to make ends meet. She is barely surviving and just wants to make sure that she is giving her kids the best that she can. One of her children has been diagnosed with ADHD which complicates things because he is often out of control.</p>
         </div>
@@ -849,8 +851,14 @@
     /* ─── Diary entry dropdowns ─────────────────────────────────── */
     (function () {
       document.querySelectorAll('.diary-read-btn').forEach(function (btn) {
+        const panel = document.getElementById(btn.getAttribute('aria-controls'));
+        // Singular vs. plural label based on how many entries this family has
+        const label = btn.querySelector('.rd-label');
+        if (panel && label) {
+          const n = panel.querySelectorAll('.entry-tile').length;
+          label.textContent = n === 1 ? 'Read Her Entry' : 'Read Her Entries';
+        }
         btn.addEventListener('click', function () {
-          const panel = document.getElementById(btn.getAttribute('aria-controls'));
           const open = btn.getAttribute('aria-expanded') === 'true';
           btn.setAttribute('aria-expanded', open ? 'false' : 'true');
           if (panel) panel.hidden = open;
