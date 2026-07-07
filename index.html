@@ -676,25 +676,25 @@
       <p class="section-sub">A vlog series about what parenting actually looks like — the invisible labor, the 3 AM decisions, the beautiful mess of it all. No filters, no judgment, just honesty.</p>
     </div>
     <div class="episodes-grid">
-      <div class="ep-card">
+      <div class="ep-card" role="button" tabindex="0" aria-label="Play: Bailey's Story — No Parent Should Do This Alone" data-video="https://player.vimeo.com/video/1207618536?h=b39650dafb&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479">
         <div class="ep-thumb ep-thumb--1">
           <img src="assets/episode-1.webp" alt="">
           <div class="play-circle">▶</div>
           <div class="ep-meta"><div class="ep-badge">Episode One</div><div class="ep-title">Bailey's Story: No Parent Should Do This Alone</div></div>
         </div>
       </div>
-      <div class="ep-card">
+      <div class="ep-card" role="button" tabindex="0" aria-label="Play: The List That Never Ends" data-video="https://player.vimeo.com/video/1207618537?h=c74ca9f287&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479">
         <div class="ep-thumb ep-thumb--2">
           <img src="assets/episode-2.webp" alt="">
           <div class="play-circle">▶</div>
-          <div class="ep-meta"><div class="ep-badge">Episode 2 — Coming Soon</div><div class="ep-title">The List That Never Ends</div></div>
+          <div class="ep-meta"><div class="ep-badge">Episode 2</div><div class="ep-title">The List That Never Ends</div></div>
         </div>
       </div>
-      <div class="ep-card">
+      <div class="ep-card" role="button" tabindex="0" aria-label="Play: The 47th Decision Before 9 AM" data-video="https://player.vimeo.com/video/1207619099?h=728a3cde78&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479">
         <div class="ep-thumb ep-thumb--3">
           <img src="assets/episode-3.webp" alt="">
           <div class="play-circle">▶</div>
-          <div class="ep-meta"><div class="ep-badge">Episode 3 — Coming Soon</div><div class="ep-title">The 47th Decision Before 9 AM</div></div>
+          <div class="ep-meta"><div class="ep-badge">Episode 3</div><div class="ep-title">The 47th Decision Before 9 AM</div></div>
         </div>
       </div>
     </div>
@@ -924,6 +924,15 @@
           const m = cs && cs.match(/([\d.]+)\s*\/\s*([\d.]+)/);
           if (m) ar = parseFloat(m[1]) / parseFloat(m[2]);
           open(iframe.src, ar);
+        });
+      });
+
+      // Episode cards open their (portrait) video in the lightbox on click / Enter / Space
+      document.querySelectorAll('.ep-card[data-video]').forEach(function (card) {
+        function play() { open(card.getAttribute('data-video'), 9 / 16); }
+        card.addEventListener('click', play);
+        card.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); }
         });
       });
 
